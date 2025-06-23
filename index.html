@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luke's life</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link.active::after,
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Password Entry Screen -->
+    <div id="password-screen" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 p-4">
+        <div class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md fade-in">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">Welcome</h1>
+                <p class="text-gray-600">Enter the password to continue</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+                </div>
+                
+                <button id="submit-password" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200 transform hover:scale-[1.02]">
+                    Enter Site
+                </button>
+                
+                <p id="password-error" class="text-red-500 text-sm text-center hidden">Incorrect password. Please try again.</p>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Site Content -->
+    <div id="main-content" class="hidden">
+        <!-- Navigation -->
+        <nav class="bg-white shadow-md">
+            <div class="container mx-auto px-4 py-3">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="flex items-center mb-4 md:mb-0">
+                        <span class="text-2xl font-bold text-blue-600">Explore</span>
+                    </div>
+                    
+                    <ul class="flex space-x-1 sm:space-x-2 md:space-x-8">
+                        <li><a href="#" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-600 transition duration-200 active" data-page="about">About</a></li>
+                        <li><a href="#" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-600 transition duration-200" data-page="teaching">Teaching</a></li>
+                        <li><a href="#" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-600 transition duration-200" data-page="learning">Learning</a></li>
+                        <li><a href="#" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-600 transition duration-200" data-page="adventures">Adventures</a></li>
+                        <li><a href="#" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-600 transition duration-200" data-page="future">Future</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div class="container mx-auto px-4 py-8">
+            <!-- About Page -->
+            <div id="about" class="page active fade-in">
+                <div class="max-w-4xl mx-auto">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">About Me</h1>
+                    
+                    <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                        <p class="text-gray-700 mb-4">Welcome to our platform where exploration and learning come together. We believe in the power of adventure to transform education and personal growth.</p>
+                        
+                        <p class="text-gray-700 mb-4">Our mission is to inspire curiosity and foster a love for discovery through innovative teaching methods and immersive learning experiences.</p>
+                        
+                        <div class="flex flex-col md:flex-row gap-6 mt-8">
+                            <div class="bg-blue-50 rounded-lg p-5 flex-1">
+                                <div class="text-blue-600 text-xl mb-2">🌟 Our Vision</div>
+                                <p class="text-gray-700">To create a world where learning is an adventure and every adventure is a learning opportunity.</p>
+                            </div>
+                            
+                            <div class="bg-purple-50 rounded-lg p-5 flex-1">
+                                <div class="text-purple-600 text-xl mb-2">🧭 Our Values</div>
+                                <p class="text-gray-700">Curiosity, exploration, innovation, and the courage to venture into the unknown.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Our Team</h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="text-center">
+                                <div class="w-24 h-24 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full mx-auto flex items-center justify-center text-white text-2xl font-bold">JD</div>
+                                <h3 class="mt-3 font-medium">Jane Doe</h3>
+                                <p class="text-sm text-gray-600">Founder & Explorer</p>
+                            </div>
+                            
+                            <div class="text-center">
+                                <div class="w-24 h-24 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full mx-auto flex items-center justify-center text-white text-2xl font-bold">JS</div>
+                                <h3 class="mt-3 font-medium">John Smith</h3>
+                                <p class="text-sm text-gray-600">Lead Educator</p>
+                            </div>
+                            
+                            <div class="text-center">
+                                <div class="w-24 h-24 bg-gradient-to-br from-green-400 to-green-600 rounded-full mx-auto flex items-center justify-center text-white text-2xl font-bold">AL</div>
+                                <h3 class="mt-3 font-medium">Alex Lee</h3>
+                                <p class="text-sm text-gray-600">Adventure Guide</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teaching Page -->
+            <div id="teaching" class="page fade-in">
+                <div class="max-w-4xl mx-auto">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Teaching Philosophy</h1>
+                    
+                    <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                        <p class="text-gray-700 mb-4">Our teaching approach combines traditional wisdom with innovative methods, creating engaging learning experiences that inspire curiosity and critical thinking.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                            <div class="bg-amber-50 rounded-lg p-5">
+                                <div class="text-amber-600 text-xl mb-2">📚 Methodology</div>
+                                <p class="text-gray-700">We believe in experiential learning where students actively participate in their education through hands-on activities and real-world applications.</p>
+                            </div>
+                            
+                            <div class="bg-teal-50 rounded-lg p-5">
+                                <div class="text-teal-600 text-xl mb-2">🧠 Approach</div>
+                                <p class="text-gray-700">Our curriculum is designed to foster critical thinking, creativity, and problem-solving skills through collaborative projects and guided discovery.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Teaching Programs</h2>
+                        
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-blue-500 pl-4 py-2">
+                                <h3 class="font-medium text-lg">Exploratory Workshops</h3>
+                                <p class="text-gray-600">Hands-on sessions that encourage learning through discovery and experimentation.</p>
+                            </div>
+                            
+                            <div class="border-l-4 border-purple-500 pl-4 py-2">
+                                <h3 class="font-medium text-lg">Field Studies</h3>
+                                <p class="text-gray-600">Immersive experiences in real-world environments to apply theoretical knowledge.</p>
+                            </div>
+                            
+                            <div class="border-l-4 border-green-500 pl-4 py-2">
+                                <h3 class="font-medium text-lg">Mentorship Program</h3>
+                                <p class="text-gray-600">One-on-one guidance from experts to nurture individual talents and interests.</p>
+                            </div>
+                            
+                            <div class="border-l-4 border-amber-500 pl-4 py-2">
+                                <h3 class="font-medium text-lg">Collaborative Projects</h3>
+                                <p class="text-gray-600">Team-based initiatives that develop communication and cooperation skills.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learning Page -->
+            <div id="learning" class="page fade-in">
+                <div class="max-w-4xl mx-auto">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Learning Resources</h1>
+                    
+                    <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                        <p class="text-gray-700 mb-4">We provide a variety of resources to support your learning journey, from structured courses to self-guided materials that cater to different learning styles and interests.</p>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+                            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-5 flex flex-col items-center text-center">
+                                <div class="bg-blue-100 p-3 rounded-full mb-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                    </svg>
+                                </div>
+                                <h3 class="font-medium text-lg">Online Courses</h3>
+                                <p class="text-gray-600 text-sm mt-2">Structured learning paths with interactive content and assessments.</p>
+                            </div>
+                            
+                            <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-5 flex flex-col items-center text-center">
+                                <div class="bg-purple-100 p-3 rounded-full mb-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+                                    </svg>
+                                </div>
+                                <h3 class="font-medium text-lg">Video Tutorials</h3>
+                                <p class="text-gray-600 text-sm mt-2">Visual demonstrations and explanations of key concepts and skills.</p>
+                            </div>
+                            
+                            <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-5 flex flex-col items-center text-center">
+                                <div class="bg-green-100 p-3 rounded-full mb-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                    </svg>
+                                </div>
+                                <h3 class="font-medium text-lg">Practice Exercises</h3>
+                                <p class="text-gray-600 text-sm mt-2">Hands-on activities to reinforce learning and build practical skills.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Learning Paths</h2>
+                        
+                        <div class="space-y-6">
+                            <div class="bg-gray-50 rounded-lg p-5">
+                                <div class="flex items-center mb-3">
+                                    <div class="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">1</div>
+                                    <h3 class="font-medium text-lg">Beginner Explorer</h3>
+                                </div>
+                                <p class="text-gray-700 ml-11">Introduction to core concepts and fundamental skills for new adventurers.</p>
+                            </div>
+                            
+                            <div class="bg-gray-50 rounded-lg p-5">
+                                <div class="flex items-center mb-3">
+                                    <div class="bg-purple-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">2</div>
+                                    <h3 class="font-medium text-lg">Intermediate Pathfinder</h3>
+                                </div>
+                                <p class="text-gray-700 ml-11">Advanced techniques and deeper understanding for those with some experience.</p>
+                            </div>
+                            
+                            <div class="bg-gray-50 rounded-lg p-5">
+                                <div class="flex items-center mb-3">
+                                    <div class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">3</div>
+                                    <h3 class="font-medium text-lg">Expert Navigator</h3>
+                                </div>
+                                <p class="text-gray-700 ml-11">Specialized knowledge and mastery for experienced adventurers seeking excellence.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Adventures Page -->
+            <div id="adventures" class="page fade-in">
+                <div class="max-w-4xl mx-auto">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Adventures</h1>
+                    
+                    <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                        <p class="text-gray-700 mb-4">Embark on transformative journeys that combine exploration, learning, and personal growth. Our adventures are carefully crafted to challenge and inspire.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                            <div class="bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-lg overflow-hidden">
+                                <div class="h-40 bg-blue-600 flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                                    </svg>
+                                </div>
+                                <div class="p-5">
+                                    <h3 class="font-bold text-xl mb-2">Wilderness Expedition</h3>
+                                    <p class="mb-4">A 7-day journey through untouched natural landscapes, learning survival skills and environmental science.</p>
+                                    <button class="bg-white text-blue-600 hover:bg-blue-50 font-medium py-2 px-4 rounded-lg transition duration-200">Learn More</button>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gradient-to-br from-purple-500 to-purple-700 text-white rounded-lg overflow-hidden">
+                                <div class="h-40 bg-purple-600 flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div class="p-5">
+                                    <h3 class="font-bold text-xl mb-2">Cultural Immersion</h3>
+                                    <p class="mb-4">Experience diverse traditions and ways of life through a 10-day immersive cultural exchange program.</p>
+                                    <button class="bg-white text-purple-600 hover:bg-purple-50 font-medium py-2 px-4 rounded-lg transition duration-200">Learn More</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <div class="bg-gradient-to-br from-amber-500 to-amber-700 text-white rounded-lg overflow-hidden">
+                                <div class="h-40 bg-amber-600 flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                                    </svg>
+                                </div>
+                                <div class="p-5">
+                                    <h3 class="font-bold text-xl mb-2">Scientific Discovery</h3>
+                                    <p class="mb-4">Join researchers on a 5-day expedition to collect data and contribute to ongoing scientific studies.</p>
+                                    <button class="bg-white text-amber-600 hover:bg-amber-50 font-medium py-2 px-4 rounded-lg transition duration-200">Learn More</button>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gradient-to-br from-green-500 to-green-700 text-white rounded-lg overflow-hidden">
+                                <div class="h-40 bg-green-600 flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 6l2 2m0 0l2 2m-2-2l2-2m-2 2l-2 2m0 7l2 2m0 0l2 2m-2-2l2-2m-2 2l-2 2M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z" />
+                                    </svg>
+                                </div>
+                                <div class="p-5">
+                                    <h3 class="font-bold text-xl mb-2">Urban Exploration</h3>
+                                    <p class="mb-4">Discover the hidden stories and architectural wonders of cities through guided urban adventures.</p>
+                                    <button class="bg-white text-green-600 hover:bg-green-50 font-medium py-2 px-4 rounded-lg transition duration-200">Learn More</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Upcoming Adventures</h2>
+                        
+                        <div class="space-y-4">
+                            <div class="flex flex-col md:flex-row border border-gray-200 rounded-lg overflow-hidden">
+                                <div class="bg-blue-100 md:w-32 flex items-center justify-center p-4">
+                                    <div class="text-center">
+                                        <div class="text-blue-600 font-bold text-xl">15</div>
+                                        <div class="text-blue-600">June</div>
+                                    </div>
+                                </div>
+                                <div class="p-4 flex-1">
+                                    <h3 class="font-medium text-lg">Mountain Trek: Alpine Ecosystems</h3>
+                                    <p class="text-gray-600 text-sm">A 3-day exploration of mountain ecosystems and geology.</p>
+                                </div>
+                                <div class="bg-gray-50 p-4 flex items-center">
+                                    <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition duration-200">Register</button>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-col md:flex-row border border-gray-200 rounded-lg overflow-hidden">
+                                <div class="bg-purple-100 md:w-32 flex items-center justify-center p-4">
+                                    <div class="text-center">
+                                        <div class="text-purple-600 font-bold text-xl">22</div>
+                                        <div class="text-purple-600">July</div>
+                                    </div>
+                                </div>
+                                <div class="p-4 flex-1">
+                                    <h3 class="font-medium text-lg">Coastal Conservation Project</h3>
+                                    <p class="text-gray-600 text-sm">Help protect marine ecosystems while learning about ocean conservation.</p>
+                                </div>
+                                <div class="bg-gray-50 p-4 flex items-center">
+                                    <button class="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded transition duration-200">Register</button>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-col md:flex-row border border-gray-200 rounded-lg overflow-hidden">
+                                <div class="bg-green-100 md:w-32 flex items-center justify-center p-4">
+                                    <div class="text-center">
+                                        <div class="text-green-600 font-bold text-xl">10</div>
+                                        <div class="text-green-600">August</div>
+                                    </div>
+                                </div>
+                                <div class="p-4 flex-1">
+                                    <h3 class="font-medium text-lg">Desert Astronomy Camp</h3>
+                                    <p class="text-gray-600 text-sm">Stargaze in pristine dark skies while learning about celestial navigation.</p>
+                                </div>
+                                <div class="bg-gray-50 p-4 flex items-center">
+                                    <button class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded transition duration-200">Register</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Future Page -->
+            <div id="future" class="page fade-in">
+                <div class="max-w-4xl mx-auto">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Future Initiatives</h1>
+                    
+                    <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                        <p class="text-gray-700 mb-4">We're constantly evolving and developing new programs to expand our impact. Here's a glimpse of what's on the horizon for our community.</p>
+                        
+                        <div class="relative mt-8">
+                            <div class="absolute left-5 top-0 bottom-0 w-0.5 bg-blue-200"></div>
+                            
+                            <div class="relative pl-12 pb-8">
+                                <div class="absolute left-0 rounded-full bg-blue-500 text-white w-10 h-10 flex items-center justify-center">
+                                    <span>1</span>
+                                </div>
+                                <div class="bg-blue-50 rounded-lg p-5">
+                                    <h3 class="font-bold text-xl text-blue-700 mb-2">Virtual Reality Expeditions</h3>
+                                    <p class="text-gray-700">Launching in 2023, our VR program will allow participants to experience remote and inaccessible environments through immersive technology.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="relative pl-12 pb-8">
+                                <div class="absolute left-0 rounded-full bg-purple-500 text-white w-10 h-10 flex items-center justify-center">
+                                    <span>2</span>
+                                </div>
+                                <div class="bg-purple-50 rounded-lg p-5">
+                                    <h3 class="font-bold text-xl text-purple-700 mb-2">Global Learning Network</h3>
+                                    <p class="text-gray-700">Building connections between learners and educators worldwide to share knowledge and experiences across cultures and disciplines.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="relative pl-12">
+                                <div class="absolute left-0 rounded-full bg-green-500 text-white w-10 h-10 flex items-center justify-center">
+                                    <span>3</span>
+                                </div>
+                                <div class="bg-green-50 rounded-lg p-5">
+                                    <h3 class="font-bold text-xl text-green-700 mb-2">Sustainability Initiatives</h3>
+                                    <p class="text-gray-700">Developing programs focused on environmental conservation and sustainable practices to address global challenges.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Get Involved</h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-5">
+                                <h3 class="font-medium text-lg text-blue-700 mb-3">Join Our Newsletter</h3>
+                                <p class="text-gray-700 mb-4">Stay updated on our latest initiatives and upcoming opportunities.</p>
+                                <div class="flex">
+                                    <input type="email" placeholder="Your email" class="flex-1 px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                                    <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-r-lg transition duration-200">Subscribe</button>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-5">
+                                <h3 class="font-medium text-lg text-purple-700 mb-3">Become a Partner</h3>
+                                <p class="text-gray-700 mb-4">Collaborate with us to create innovative learning experiences and adventures.</p>
+                                <button class="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200 w-full">Contact Us</button>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg p-5">
+                            <h3 class="font-medium text-lg text-amber-700 mb-3">Share Your Ideas</h3>
+                            <p class="text-gray-700 mb-4">We value community input. Let us know what future initiatives you'd like to see.</p>
+                            <div class="space-y-4">
+                                <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none" rows="3" placeholder="Your suggestions..."></textarea>
+                                <button class="bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Password functionality
+        const correctPassword = "adventures";
+        const passwordScreen = document.getElementById("password-screen");
+        const mainContent = document.getElementById("main-content");
+        const passwordInput = document.getElementById("password");
+        const submitButton = document.getElementById("submit-password");
+        const passwordError = document.getElementById("password-error");
+        
+        submitButton.addEventListener("click", checkPassword);
+        passwordInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                checkPassword();
+            }
+        });
+        
+        function checkPassword() {
+            if (passwordInput.value === correctPassword) {
+                passwordScreen.classList.add("hidden");
+                mainContent.classList.remove("hidden");
+            } else {
+                passwordError.classList.remove("hidden");
+                passwordInput.value = "";
+                setTimeout(() => {
+                    passwordError.classList.add("hidden");
+                }, 3000);
+            }
+        }
+        
+        // Navigation functionality
+        const navLinks = document.querySelectorAll(".nav-link");
+        const pages = document.querySelectorAll(".page");
+        
+        navLinks.forEach(link => {
+            link.addEventListener("click", function(e) {
+                e.preventDefault();
+                
+                const targetPage = this.getAttribute("data-page");
+                
+                // Update active nav link
+                navLinks.forEach(link => link.classList.remove("active"));
+                this.classList.add("active");
+                
+                // Show target page
+                pages.forEach(page => {
+                    page.classList.remove("active");
+                    if (page.id === targetPage) {
+                        page.classList.add("active");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
