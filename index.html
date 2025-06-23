@@ -220,64 +220,54 @@
             }
         });
 
-        // --- CORRECTED CONFETTI JAVASCRIPT ---
+        // --- REFINED CONFETTI JAVASCRIPT ---
         
-        /**
-         * Fires a single confetti cannon from a specific point.
-         * @param {number} originX - The starting X coordinate.
-         * @param {number} originY - The starting Y coordinate.
-         */
         function fireConfettiCannon(originX, originY) {
             const confettiContainer = document.body;
-            const confettiCount = 60; // Number of particles per cannon
+            const confettiCount = 60;
             const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#ffeb3b', '#ff9800', '#4caf50'];
-            const gravity = 0.4;  // How fast the confetti falls
+            const gravity = 0.3; 
             
             for (let i = 0; i < confettiCount; i++) {
-                // Create the confetti particle element in the DOM
                 const particle = document.createElement('div');
                 particle.classList.add('confetti');
                 particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 
-                // **THE FIX IS HERE:**
-                // We set the initial position using `left` and `top` before appending.
-                // This gives the transform a reliable starting point.
                 particle.style.left = originX + 'px';
                 particle.style.top = originY + 'px';
                 confettiContainer.appendChild(particle);
 
-                // Set initial physics properties for each particle
-                let vy = -(Math.random() * 15 + 10); // Strong initial upward velocity
-                let vx; // Horizontal velocity
+                // --- ADJUSTED PHYSICS PARAMETERS ---
+                // 1. Reduced upward velocity for a less powerful burst
+                let vy = -(Math.random() * 8 + 6); // Was: * 15 + 10
+                let vx;
 
-                // Fire left cannon to the left, right cannon to the right
+                // 2. Corrected logic to ensure cannons fire outwards
+                let baseVx = Math.random() * 6 + 4; // Was: * 10 + 5
+                
                 if (originX > window.innerWidth / 2) {
-                    vx = -(Math.random() * 10 + 5); // Right cannon fires left
+                    // Right cannon fires right (positive vx)
+                    vx = baseVx;
                 } else {
-                    vx = Math.random() * 10 + 5;   // Left cannon fires right
+                    // Left cannon fires left (negative vx)
+                    vx = -baseVx;
                 }
 
-                // Track the total translation for the transform property
                 let totalX = 0;
                 let totalY = 0;
                 let rotation = Math.random() * 360;
                 const rotationSpeed = Math.random() * 10 - 5;
 
 
-                // Create the animation loop for this specific particle
                 function update() {
-                    // Apply physics to the particle's velocity
-                    vy += gravity; // Gravity pulls it down
+                    vy += gravity;
                     
-                    // Update total translation
                     totalX += vx;
                     totalY += vy;
                     rotation += rotationSpeed;
                     
-                    // Update the transform relative to the initial position
                     particle.style.transform = `translate(${totalX}px, ${totalY}px) rotate(${rotation}deg)`;
 
-                    // If particle is off-screen, stop animating it and remove it
                     if (originY + totalY > window.innerHeight + 20) {
                         particle.remove();
                     } else {
@@ -285,24 +275,16 @@
                     }
                 }
                 
-                // Start the animation for this particle
                 requestAnimationFrame(update);
             }
         }
 
-        /**
-         * Checks the password and triggers the confetti if correct.
-         */
         function checkPassword() {
             if (passwordInput.value === correctPassword) {
-                // Get the exact position of the password input box
                 const rect = passwordInput.getBoundingClientRect();
-
-                // Fire two cannons from either side of the box
                 fireConfettiCannon(rect.left, rect.top + rect.height / 2);
                 fireConfettiCannon(rect.right, rect.top + rect.height / 2);
                 
-                // Hide the password screen after a short delay to let the animation start
                 setTimeout(() => {
                     passwordScreen.classList.add("hidden");
                     mainContent.classList.remove("hidden");
@@ -327,11 +309,9 @@
                 
                 const targetPage = this.getAttribute("data-page");
                 
-                // Update active nav link
                 navLinks.forEach(link => link.classList.remove("active"));
                 this.classList.add("active");
                 
-                // Show target page
                 pages.forEach(page => {
                     page.classList.remove("active");
                     if (page.id === targetPage) {
