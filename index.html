@@ -462,6 +462,28 @@ function resetInterval() {
 document.getElementById('prev-btn').addEventListener('click', () => moveSlide(-1));
 document.getElementById('next-btn').addEventListener('click', () => moveSlide(1));
 
+        // Add click navigation to the image container
+slideshowContainer.addEventListener('click', function(event) {
+    // Do nothing if the user clicked directly on an arrow or a dot
+    if (event.target.classList.contains('dot') || event.target.id === 'prev-btn' || event.target.id === 'next-btn') {
+        return;
+    }
+    
+    // Get the bounding rectangle of the slideshow container
+    const rect = slideshowContainer.getBoundingClientRect();
+    // Calculate the horizontal midpoint of the container
+    const midpoint = rect.left + rect.width / 2;
+    
+    // If click is on the right half, go to the next slide
+    if (event.clientX > midpoint) {
+        moveSlide(1);
+    } 
+    // If click is on the left half, go to the previous slide
+    else {
+        moveSlide(-1);
+    }
+});
+
 // Initial setup
 showSlide(0);
 startInterval();
