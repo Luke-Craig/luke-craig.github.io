@@ -145,7 +145,7 @@
                     <div class="bg-white rounded-xl shadow-md p-6 mb-8">
                         <p class="text-2xl font-semibold text-gray-800 mb-4 text-center">To empower others to reach their potential, be creative and live life to the full.</p>
                         
-                        <p class="text-gray-700 mb-4">This website is a portfolio of things I have done in my life which I am proud of. I created the website using HTML, CSS and Javascript (with a little help from AI.) Below are some examples of my adventures over the years...</p> 
+                        <p class="text-gray-700 mb-4">This website is a portfolio of things I have done in my life which I am proud of. I created the website using HTML, CSS and JavaScript (with a little help from AI.) Below are some examples of my adventures over the years...</p> 
                         
                         <!--<div class="flex flex-col md:flex-row gap-6 mt-8">-->
                         <!--    <div class="bg-blue-50 rounded-lg p-5 flex-1">-->
@@ -406,6 +406,7 @@ const slideshowContainer = document.getElementById('slideshow-container');
 const dotsContainer = document.getElementById('dots-container');
 let slideIndex = 0;
 let slideInterval;
+let isPaused = false; // The new state variable
 
 // Create slide and dot elements dynamically
 imageUrls.forEach((url, index) => {
@@ -454,6 +455,10 @@ function startInterval() {
 }
 
 function resetInterval() {
+    // If the mouse is over the slideshow, do not restart the timer.
+    if (isPaused) {
+        return; 
+    }
     clearInterval(slideInterval);
     startInterval();
 }
@@ -462,7 +467,7 @@ function resetInterval() {
 document.getElementById('prev-btn').addEventListener('click', () => moveSlide(-1));
 document.getElementById('next-btn').addEventListener('click', () => moveSlide(1));
 
-        // Add click navigation to the image container
+// Add click navigation to the image container
 slideshowContainer.addEventListener('click', function(event) {
     // Do nothing if the user clicked directly on an arrow or a dot
     if (event.target.classList.contains('dot') || event.target.id === 'prev-btn' || event.target.id === 'next-btn') {
@@ -482,6 +487,16 @@ slideshowContainer.addEventListener('click', function(event) {
     else {
         moveSlide(-1);
     }
+});
+// --- UPDATED: Pause slideshow on hover ---
+slideshowContainer.addEventListener('mouseenter', () => {
+    isPaused = true; // Set the paused state
+    clearInterval(slideInterval);
+});
+
+slideshowContainer.addEventListener('mouseleave', () => {
+    isPaused = false; // Unset the paused state
+    resetInterval(); // Resume the timer
 });
 
 // Initial setup
