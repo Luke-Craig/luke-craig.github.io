@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,24 +8,24 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f8f9fa;
         }
-        
+
         .page {
             display: none;
         }
-        
+
         .page.active {
             display: block;
         }
-        
+
         .nav-link {
             position: relative;
         }
-        
+
         .nav-link::after {
             content: '';
             position: absolute;
@@ -35,57 +36,90 @@
             background-color: #3b82f6;
             transition: width 0.3s ease;
         }
-        
+
         .nav-link.active::after,
         .nav-link:hover::after {
             width: 100%;
         }
-        
+
         .fade-in {
             animation: fadeIn 0.5s ease-in-out;
         }
-        
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* --- CONFETTI CSS --- */
         /* This CSS defines the look of each confetti piece. */
         .confetti {
-            position: fixed; /* Use fixed positioning to cover the whole screen */
-            width: 8px;      /* Rectangular shape for a classic confetti look */
+            position: fixed;
+            /* Use fixed positioning to cover the whole screen */
+            width: 8px;
+            /* Rectangular shape for a classic confetti look */
             height: 16px;
-            z-index: 10000;  /* Ensure it's on top of everything */
-            pointer-events: none; /* Make sure the confetti can't be clicked */
+            z-index: 10000;
+            /* Ensure it's on top of everything */
+            pointer-events: none;
+            /* Make sure the confetti can't be clicked */
         }
+
         /* CSS for the Slideshow */
-.slide {
-    display: none;
-    transition: opacity 0.5s ease-in-out;
-}
-.slide.active {
-    display: block;
-}
-.slide img {
-    width: 100%;
-    vertical-align: middle; /* Removes bottom space under image */
-}
-.dot {
-    cursor: pointer;
-    height: 12px;
-    width: 12px;
-    background-color: #bbb;
-    border-radius: 50%;
-    display: inline-block;
-    transition: background-color 0.6s ease;
-}
-.dot.active, .dot:hover {
-    background-color: #717171;
-}
+        .slide {
+            display: none;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slide img {
+            width: 100%;
+            vertical-align: middle;
+            /* Removes bottom space under image */
+        }
+
+        .dot {
+            cursor: pointer;
+            height: 12px;
+            width: 12px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .dot.active,
+        .dot:hover {
+            background-color: #717171;
+        }
+
+        /* CSS for Emoji Hover Labels */
+        .emoji-label {
+            opacity: 0;
+            pointer-events: none;
+            /* Prevents the label from interfering with clicks */
+            transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+            transform: translateY(5px);
+        }
+
+        .emoji-container:hover .emoji-label {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body class="min-h-screen">
     <!-- Password Entry Screen -->
     <div id="password-screen" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 p-4">
@@ -94,19 +128,19 @@
                 <h1 class="text-3xl font-bold text-gray-800 mb-2">Welcome</h1>
                 <p class="text-gray-600">Enter the password to continue</p>
             </div>
-            
+
             <div class="space-y-4">
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
                     <input type="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
                 </div>
-                
+
                 <button id="submit-password" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200 transform hover:scale-[1.02]">
                     Enter Site
                 </button>
-                
+
                 <p id="password-error" class="text-red-500 text-sm text-center hidden">Incorrect password. Please try again.</p>
-                
+
             </div>
         </div>
     </div>
@@ -120,10 +154,11 @@
                     <div class="flex items-center mb-4 md:mb-0">
                         <span class="text-2xl font-bold text-blue-600">Luke Craig</span>
                     </div>
-                    
+
                     <ul class="flex space-x-1 sm:space-x-2 md:space-x-8">
                         <li><a href="#" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-600 transition duration-200 active" data-page="about">About</a></li>
-<li><a href="#" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-600 transition duration-200" data-page="professional">Professional</a></li>                        <li><a href="#" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-600 transition duration-200" data-page="learning">Learning</a></li>
+                        <li><a href="#" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-600 transition duration-200" data-page="professional">Professional</a></li>
+                        <li><a href="#" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-600 transition duration-200" data-page="learning">My Learning</a></li>
                         <li><a href="#" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-600 transition duration-200" data-page="adventures">Adventures</a></li>
                         <li><a href="#" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-600 transition duration-200" data-page="future">Future</a></li>
                     </ul>
@@ -137,22 +172,22 @@
             <div id="about" class="page active fade-in">
                 <div class="max-w-4xl mx-auto">
                     <!-- Add Profile Picture Here -->
-<div class="mb-8 text-center">
-    <img src="https://i.ibb.co/WytkYvt/IMG-20200218-191720-1.jpg" alt="A picture of Luke Craig" class="w-48 h-48 rounded-full mx-auto shadow-xl border-4 border-white -mt-4">
-</div>
+                    <div class="mb-8 text-center">
+                        <img src="https://i.ibb.co/WytkYvt/IMG-20200218-191720-1.jpg" alt="A picture of Luke Craig" class="w-48 h-48 rounded-full mx-auto shadow-xl border-4 border-white -mt-4">
+                    </div>
                     <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6 text-center">Mission Statement</h1>
-                    
+
                     <div class="bg-white rounded-xl shadow-md p-6 mb-8">
                         <p class="text-2xl font-semibold text-gray-800 mb-4 text-center">To empower others to reach their potential, be creative and live life to the full.</p>
-                        
-                        <p class="text-gray-700 mb-4">This website is a portfolio of things I have done in my life which I am proud of. I created the website using HTML, CSS and JavaScript (with a little help from AI.) Below are some examples of my adventures over the years...</p> 
-                        
+
+                        <p class="text-gray-700 mb-4">This website is a portfolio of things I have done in my life which I am proud of. I created the website using HTML, CSS and JavaScript (with a little help from AI.) Below are some examples of my adventures over the years...</p>
+
                         <!--<div class="flex flex-col md:flex-row gap-6 mt-8">-->
                         <!--    <div class="bg-blue-50 rounded-lg p-5 flex-1">-->
                         <!--        <div class="text-blue-600 text-xl mb-2">🌟 Our Vision</div>-->
                         <!--        <p class="text-gray-700">To create a world where learning is an adventure and every adventure is a learning opportunity.</p>-->
                         <!--    </div>-->
-                            
+
                         <!--    <div class="bg-purple-50 rounded-lg p-5 flex-1">-->
                         <!--        <div class="text-purple-600 text-xl mb-2">🧭 Our Values</div>-->
                         <!--        <p class="text-gray-700">Curiosity, exploration, innovation, and the courage to venture into the unknown.</p>-->
@@ -160,37 +195,37 @@
                         <!--</div>-->
                     </div>
                     <!-- Slideshow Container -->
-<div class="max-w-4xl mx-auto my-8">
-    <div id="slideshow-container" class="relative rounded-lg shadow-2xl overflow-hidden">
-        <!-- Slides will be inserted here by JavaScript -->
+                    <div class="max-w-4xl mx-auto my-8">
+                        <div id="slideshow-container" class="relative rounded-lg shadow-2xl overflow-hidden">
+                            <!-- Slides will be inserted here by JavaScript -->
 
-        <!-- Next/previous buttons -->
-        <a id="prev-btn" class="absolute top-1/2 left-0 transform -translate-y-1/2 p-4 text-white font-bold text-2xl cursor-pointer hover:bg-black/50 transition duration-300">&#10094;</a>
-        <a id="next-btn" class="absolute top-1/2 right-0 transform -translate-y-1/2 p-4 text-white font-bold text-2xl cursor-pointer hover:bg-black/50 transition duration-300">&#10095;</a>
+                            <!-- Next/previous buttons -->
+                            <a id="prev-btn" class="absolute top-1/2 left-0 transform -translate-y-1/2 p-4 text-white font-bold text-2xl cursor-pointer hover:bg-black/50 transition duration-300">&#10094;</a>
+                            <a id="next-btn" class="absolute top-1/2 right-0 transform -translate-y-1/2 p-4 text-white font-bold text-2xl cursor-pointer hover:bg-black/50 transition duration-300">&#10095;</a>
 
-        <!-- Dots container -->
-        <div id="dots-container" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-            <!-- Dots will be inserted here by JavaScript -->
-        </div>
-    </div>
-</div>
-                    
+                            <!-- Dots container -->
+                            <div id="dots-container" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                                <!-- Dots will be inserted here by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
                     <!--<div class="bg-white rounded-xl shadow-md p-6">-->
                     <!--    <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-center">Three things I am (currently) most proud of:</h2>-->
-                        
+
                     <!--    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">-->
                     <!--        <div class="text-center">-->
                     <!--            <div class="w-24 h-24 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full mx-auto flex items-center justify-center text-white text-2xl font-bold">BG</div>-->
                     <!--            <h3 class="mt-3 font-medium">Bob Graham Round</h3>-->
                     <!--            <p class="text-sm text-gray-600">A Lake District <a href="http://bobgrahamclub.org.uk/index.php?page=memdata&mem=2835" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">adventure</a></p>-->
                     <!--        </div>-->
-                            
+
                     <!--        <div class="text-center">-->
                     <!--            <div class="w-24 h-24 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full mx-auto flex items-center justify-center text-white text-2xl font-bold"><></div>-->
                     <!--            <h3 class="mt-3 font-medium">Coding</h3>-->
                     <!--            <p class="text-sm text-gray-600">Teaching myself to code useful <a href="https://www.eduscripts.uk/about" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">things</a></p>-->
                     <!--        </div>-->
-                            
+
                     <!--        <div class="text-center">-->
                     <!--            <div class="w-24 h-24 bg-gradient-to-br from-green-400 to-green-600 rounded-full mx-auto flex items-center justify-center text-white text-2xl font-bold">#</div>-->
                     <!--            <h3 class="mt-3 font-medium">Sudoku</h3>-->
@@ -202,180 +237,316 @@
             </div>
 
             <!-- Other pages remain here... -->
-             <!-- Teaching Page -->
+            <!-- Teaching Page -->
             <!-- Professional Page -->
-<div id="professional" class="page fade-in">
-    <div class="max-w-4xl mx-auto">
-        <!-- Add Professional Page Header Image Here -->
-<div class="mb-8">
-    <img src="https://lh3.googleusercontent.com/pw/AP1GczNB_Ac_xQiTMQ_lKd0OvAdfw8xD_6aZ0AX7zNGKmflc0nBC5gvgzpvF82L8wrmCgUpdMmuZ8pe5zqbgFAS2qkVilzMwizH1ao7Nnqoi1V_yiP6qpLfSuVlEQxhHjOmNv4k9dgSezLZm5kqHrVGQiGjGrg=w1864-h1404-s-no-gm?authuser=0" alt="Luke Craig presenting at a conference" class="w-full h-64 object-cover rounded-xl shadow-lg">
-</div>
+            <div id="professional" class="page fade-in">
+                <div class="max-w-4xl mx-auto">
+                    <!-- Add Professional Page Header Image Here -->
+                    <div class="mb-8">
+                        <img src="https://lh3.googleusercontent.com/pw/AP1GczNB_Ac_xQiTMQ_lKd0OvAdfw8xD_6aZ0AX7zNGKmflc0nBC5gvgzpvF82L8wrmCgUpdMmuZ8pe5zqbgFAS2qkVilzMwizH1ao7Nnqoi1V_yiP6qpLfSuVlEQxhHjOmNv4k9dgSezLZm5kqHrVGQiGjGrg=w1864-h1404-s-no-gm?authuser=0" alt="Luke Craig presenting at a conference" class="w-full h-64 object-cover rounded-xl shadow-lg">
+                    </div>
 
-        <!-- Professional Summary -->
-        <div class="bg-white rounded-xl shadow-md p-8 mb-8">
-            <h2 class="text-2xl font-bold text-gray-800 mb-4">Professional Summary</h2>
-            <p class="text-gray-700">
-                With over a decade of experience transforming classrooms, I am a passionate leader in the field of educational technology. My work as a Google Certified Trainer and Innovator has taken me across the globe, where I've had the privilege of training educators in Miami, Amsterdam, Oman, and beyond. I specialize in empowering teachers to transform their pedagogy through the use of technology and creating custom solutions using Google Apps Script to solve unique challenges in schools.<br><br>
+                    <!-- Professional Summary -->
+                    <div class="bg-white rounded-xl shadow-md p-8 mb-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Professional Summary</h2>
+                        <p class="text-gray-700">
+                            With over a decade of experience transforming classrooms, I am a passionate leader in the field of educational technology. My work as a Google Certified Trainer and Innovator has taken me across the globe, where I've had the privilege of training educators in Miami, Amsterdam, Oman, and beyond. I specialize in empowering teachers to transform their pedagogy through the use of technology and creating custom solutions using Google Apps Script to solve unique challenges in schools.<br><br>
 
-This practical, hands-on work is underpinned by a deep commitment to academic research. Holding both a Bachelor's and a Master's of Education, I am currently a doctoral candidate (EdD) at the University of East London. My research explores how technology can be a powerful catalyst for student creativity, a theme that drives my professional mission. As a published author, I strive to bridge the gap between educational theory and practical, impactful classroom application.
-            </p>
-        </div>
+                            This practical, hands-on work is underpinned by a deep commitment to academic research. Holding both a Bachelor's and a Master's of Education, I am currently a doctoral candidate (EdD) at the University of East London. My research explores how technology can be a powerful catalyst for student creativity, a theme that drives my professional mission. As a published author, I strive to bridge the gap between educational theory and practical, impactful classroom application.
+                        </p>
+                    </div>
 
-        <!-- Experience Timeline -->
-        <div>
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Experience</h2>
-            <div class="relative border-l-2 border-blue-200 ml-4">
-
-                <!-- Timeline Item: Education Consultant -->
-                <div class="mb-8 pl-8">
-                    <div class="absolute -left-4 mt-1.5 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md p-6">
-                        <p class="text-sm text-gray-500">2022 - Present</p>
-                        <h3 class="text-xl font-bold text-gray-800 mt-1">Education Consultant</h3>
-                        <p class="font-semibold text-gray-700 mb-3">The Education Space</p>
-                        <ul class="list-disc list-inside text-gray-600 space-y-1">
-                            <li>Deliver comprehensive training sessions for Computing Leads.</li>
-                            <li>Provide strategic guidance for senior leaders on digital transformation.</li>
-                            <li>Develop custom applications using Google Apps Script.</li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Timeline Item: Guest Editor -->
-<div class="mb-8 pl-8">
-    <div class="absolute -left-4 mt-1.5 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white">
-        <i class="fas fa-edit"></i>
-    </div>
-    <div class="bg-white rounded-xl shadow-md p-6">
-        <p class="text-sm text-gray-500">May 2025</p>
-        <h3 class="text-xl font-bold text-gray-800 mt-1">Guest Editor</h3>
-        <p class="font-semibold text-gray-700 mb-3">UEL's RITE Journal</p>
-        <p class="text-gray-600">One of four guest editors for the University of East London's '<a href="https://www.uel.ac.uk/sites/default/files/rite-may-25---complete-issue.pdf" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Research in Teacher Education</a>' Journal.</p>
-    </div>
-</div>
-
-                <!-- Timeline Item: Author -->
-                <div class="mb-8 pl-8">
-                    <div class="absolute -left-4 mt-1.5 w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white">
-                        <i class="fas fa-book-open"></i>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md p-6">
-                        <p class="text-sm text-gray-500">2024</p>
-                        <h3 class="text-xl font-bold text-gray-800 mt-1">Author</h3>
-                        <p class="font-semibold text-gray-700 mb-3">Cambridge University Press</p>
-                        <p class="text-gray-600">Co-authored <a href="https://www.cambridge.org/gb/education/subject/computing/ict/cambridge-primary-and-lower-secondary-computing/cambridge-primary-computing-digital-learners-book-6-1-year-learners-book-6-digital-access-1-year?format=DO&isbn=9781009320542" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Primary Computing Learner's Book 6</a>, writing the chapters on Programming and Computational Thinking.</p>
-                    </div>
-                </div>
-
-                <!-- Timeline Item: Computing Lead -->
-                <div class="mb-8 pl-8">
-                    <div class="absolute -left-4 mt-1.5 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md p-6">
-                        <p class="text-sm text-gray-500">2014 - Present</p>
-                        <h3 class="text-xl font-bold text-gray-800 mt-1">Computing Lead</h3>
-                        <p class="font-semibold text-gray-700 mb-3">Britannia Education Trust</p>
-                         <ul class="list-disc list-inside text-gray-600 space-y-1">
-                            <li>Spearheaded NCCE Teach Computing curriculum implementation.</li>
-                            <li>Led school to achieve Google Reference School status (2018).</li>
-                            <li>Secured DfE funding as an 'EdTech Demonstrator school' (2020).</li>
-                             <li>Achieved Edufuturists Primary School of the Year award (2022).</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <!-- Timeline Item: Class Teacher -->
-                <div class="mb-8 pl-8">
-                    <div class="absolute -left-4 mt-1.5 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white">
-                       <i class="fas fa-chalkboard-teacher"></i>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md p-6">
-                        <p class="text-sm text-gray-500">2012 - 2014</p>
-                        <h3 class="text-xl font-bold text-gray-800 mt-1">Class Teacher</h3>
-                        <p class="font-semibold text-gray-700 mb-3">Britannia Village Primary School</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Education Section -->
-         <div class="mt-8">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Education</h2>
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-white rounded-xl shadow-md p-6">
-                    <h3 class="font-bold text-lg text-blue-600">Doctor of Education (EdD)</h3>
-                    <p class="font-semibold">University of East London</p>
-                    <p class="text-sm text-gray-500">2022 - Present</p>
-                </div>
-                <div class="bg-white rounded-xl shadow-md p-6">
-                    <h3 class="font-bold text-lg text-blue-600">Master of Education (MEd)</h3>
-                    <p class="font-semibold">University of East London</p>
-                    <p class="text-sm text-gray-500">2014 - 2017</p>
-                </div>
-                <div class="bg-white rounded-xl shadow-md p-6 md:col-span-2">
-                    <h3 class="font-bold text-lg text-blue-600">Bachelor of Education (BEd)</h3>
-                    <p class="font-semibold">Middlesex University</p>
-                    <p class="text-sm text-gray-500">2009 - 2012</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Skills & Expertise -->
-        <div class="mt-12">
-             <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Skills & Expertise</h2>
-             <div class="bg-white rounded-xl shadow-md p-8">
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <!-- Experience Timeline -->
                     <div>
-                        <h4 class="font-bold text-lg text-gray-800 mb-2 border-b-2 border-purple-200 pb-1">Curriculum</h4>
-                        <ul class="list-disc list-inside text-gray-600 space-y-1">
-                            <li>NCCE Teach Computing</li>
-                            <li>Programming</li>
-                            <li>Physical Computing</li>
-                        </ul>
+                        <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Experience</h2>
+                        <div class="relative border-l-2 border-blue-200 ml-4">
+
+                            <!-- Timeline Item: Education Consultant -->
+                            <div class="mb-8 pl-8">
+                                <div class="absolute -left-4 mt-1.5 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white">
+                                    <i class="fas fa-briefcase"></i>
+                                </div>
+                                <div class="bg-white rounded-xl shadow-md p-6">
+                                    <p class="text-sm text-gray-500">2022 - Present</p>
+                                    <h3 class="text-xl font-bold text-gray-800 mt-1">Education Consultant</h3>
+                                    <p class="font-semibold text-gray-700 mb-3">The Education Space</p>
+                                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                        <li>Deliver comprehensive training sessions for Computing Leads.</li>
+                                        <li>Provide strategic guidance for senior leaders on digital transformation.</li>
+                                        <li>Develop custom applications using Google Apps Script.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Timeline Item: Guest Editor -->
+                            <div class="mb-8 pl-8">
+                                <div class="absolute -left-4 mt-1.5 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white">
+                                    <i class="fas fa-edit"></i>
+                                </div>
+                                <div class="bg-white rounded-xl shadow-md p-6">
+                                    <p class="text-sm text-gray-500">May 2025</p>
+                                    <h3 class="text-xl font-bold text-gray-800 mt-1">Guest Editor</h3>
+                                    <p class="font-semibold text-gray-700 mb-3">UEL's RITE Journal</p>
+                                    <p class="text-gray-600">One of four guest editors for the University of East London's '<a href="https://www.uel.ac.uk/sites/default/files/rite-may-25---complete-issue.pdf" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Research in Teacher Education</a>' Journal.</p>
+                                </div>
+                            </div>
+
+                            <!-- Timeline Item: Author -->
+                            <div class="mb-8 pl-8">
+                                <div class="absolute -left-4 mt-1.5 w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white">
+                                    <i class="fas fa-book-open"></i>
+                                </div>
+                                <div class="bg-white rounded-xl shadow-md p-6">
+                                    <p class="text-sm text-gray-500">2024</p>
+                                    <h3 class="text-xl font-bold text-gray-800 mt-1">Author</h3>
+                                    <p class="font-semibold text-gray-700 mb-3">Cambridge University Press</p>
+                                    <p class="text-gray-600">Co-authored <a href="https://www.cambridge.org/gb/education/subject/computing/ict/cambridge-primary-and-lower-secondary-computing/cambridge-primary-computing-digital-learners-book-6-1-year-learners-book-6-digital-access-1-year?format=DO&isbn=9781009320542" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Primary Computing Learner's Book 6</a>, writing the chapters on Programming and Computational Thinking.</p>
+                                </div>
+                            </div>
+
+                            <!-- Timeline Item: Computing Lead -->
+                            <div class="mb-8 pl-8">
+                                <div class="absolute -left-4 mt-1.5 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white">
+                                    <i class="fas fa-briefcase"></i>
+                                </div>
+                                <div class="bg-white rounded-xl shadow-md p-6">
+                                    <p class="text-sm text-gray-500">2014 - Present</p>
+                                    <h3 class="text-xl font-bold text-gray-800 mt-1">Computing Lead</h3>
+                                    <p class="font-semibold text-gray-700 mb-3">Britannia Education Trust</p>
+                                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                        <li>Spearheaded NCCE Teach Computing curriculum implementation.</li>
+                                        <li>Led school to achieve Google Reference School status (2018).</li>
+                                        <li>Secured DfE funding as an 'EdTech Demonstrator school' (2020).</li>
+                                        <li>Achieved Edufuturists Primary School of the Year award (2022).</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Timeline Item: Class Teacher -->
+                            <div class="mb-8 pl-8">
+                                <div class="absolute -left-4 mt-1.5 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white">
+                                    <i class="fas fa-chalkboard-teacher"></i>
+                                </div>
+                                <div class="bg-white rounded-xl shadow-md p-6">
+                                    <p class="text-sm text-gray-500">2012 - 2014</p>
+                                    <h3 class="text-xl font-bold text-gray-800 mt-1">Class Teacher</h3>
+                                    <p class="font-semibold text-gray-700 mb-3">Britannia Village Primary School</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                     <div>
-                        <h4 class="font-bold text-lg text-gray-800 mb-2 border-b-2 border-purple-200 pb-1">EdTech</h4>
-                        <ul class="list-disc list-inside text-gray-600 space-y-1">
-                            <li>Google Certified Trainer</li>
-                            <li>Google Certified Innovator</li>
-                            <li>Google Apps Script</li>
-                            <li>Chromebooks</li>
-                        </ul>
+
+                    <!-- Education Section -->
+                    <div class="mt-8">
+                        <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Education</h2>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="bg-white rounded-xl shadow-md p-6">
+                                <h3 class="font-bold text-lg text-blue-600">Doctor of Education (EdD)</h3>
+                                <p class="font-semibold">University of East London</p>
+                                <p class="text-sm text-gray-500">2022 - Present</p>
+                            </div>
+                            <div class="bg-white rounded-xl shadow-md p-6">
+                                <h3 class="font-bold text-lg text-blue-600">Master of Education (MEd)</h3>
+                                <p class="font-semibold">University of East London</p>
+                                <p class="text-sm text-gray-500">2014 - 2017</p>
+                            </div>
+                            <div class="bg-white rounded-xl shadow-md p-6 md:col-span-2">
+                                <h3 class="font-bold text-lg text-blue-600">Bachelor of Education (BEd)</h3>
+                                <p class="font-semibold">Middlesex University</p>
+                                <p class="text-sm text-gray-500">2009 - 2012</p>
+                            </div>
+                        </div>
                     </div>
-                     <div>
-                        <h4 class="font-bold text-lg text-gray-800 mb-2 border-b-2 border-purple-200 pb-1">Leadership</h4>
-                        <ul class="list-disc list-inside text-gray-600 space-y-1">
-                            <li>Digital Strategy</li>
-                            <li>Teacher Training</li>
-                            <li>Workshop Facilitation</li>
-                        </ul>
+
+                    <!-- Skills & Expertise -->
+                    <div class="mt-12">
+                        <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Skills & Expertise</h2>
+                        <div class="bg-white rounded-xl shadow-md p-8">
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                                <div>
+                                    <h4 class="font-bold text-lg text-gray-800 mb-2 border-b-2 border-purple-200 pb-1">Curriculum</h4>
+                                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                        <li>NCCE Teach Computing</li>
+                                        <li>Programming</li>
+                                        <li>Physical Computing</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg text-gray-800 mb-2 border-b-2 border-purple-200 pb-1">EdTech</h4>
+                                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                        <li>Google Certified Trainer</li>
+                                        <li>Google Certified Innovator</li>
+                                        <li>Google Apps Script</li>
+                                        <li>Chromebooks</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg text-gray-800 mb-2 border-b-2 border-purple-200 pb-1">Leadership</h4>
+                                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                        <li>Digital Strategy</li>
+                                        <li>Teacher Training</li>
+                                        <li>Workshop Facilitation</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
-             </div>
-        </div>
+            </div>
 
-    </div>
-</div>
-
-             <!-- Learning Page -->
+            <!-- Learning Page -->
+            <!-- Learning Page -->
             <div id="learning" class="page fade-in">
                 <div class="max-w-4xl mx-auto">
-                    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Learning Resources</h1>
+                    <!-- Page Title and Introduction -->
+                    <div class="text-center mb-12">
+                        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Learning</h1>
+                        <p class="max-w-2xl mx-auto text-gray-600">
+                            Learning is not just for students. I love learning new things and then applying my new knowledge and skills in creative ways. Here are some of the things I have learnt and projects I have created.
+                        </p>
+                    </div>
+                    <!-- Emoji Banner -->
+                    <div class="flex justify-center items-start space-x-4 md:space-x-8 p-6 bg-white rounded-xl shadow-md mb-12">
+                        <!-- Reading Emoji -->
+                        <div class="emoji-container relative text-center cursor-pointer" data-target="reading-section">
+                            <span class="text-5xl md:text-7xl inline-block transform transition-transform duration-200 hover:scale-125">📚</span>
+                            <span class="emoji-label absolute -bottom-6 left-1/2 -translate-x-1/2 text-sm font-semibold text-gray-700 bg-gray-100 px-2 py-1 rounded-md shadow-sm">Reading</span>
+                        </div>
+                        <!-- Coding Emoji -->
+                        <div class="emoji-container relative text-center cursor-pointer" data-target="coding-section">
+                            <span class="text-5xl md:text-7xl inline-block transform transition-transform duration-200 hover:scale-125">👾</span>
+                            <span class="emoji-label absolute -bottom-6 left-1/2 -translate-x-1/2 text-sm font-semibold text-gray-700 bg-gray-100 px-2 py-1 rounded-md shadow-sm">Coding</span>
+                        </div>
+                        <!-- Drumming Emoji -->
+                        <div class="emoji-container relative text-center cursor-pointer" data-target="drumming-section">
+                            <span class="text-5xl md:text-7xl inline-block transform transition-transform duration-200 hover:scale-125">🥁</span>
+                            <span class="emoji-label absolute -bottom-6 left-1/2 -translate-x-1/2 text-sm font-semibold text-gray-700 bg-gray-100 px-2 py-1 rounded-md shadow-sm">Drumming</span>
+                        </div>
+                        <!-- Academic Emoji -->
+                        <div class="emoji-container relative text-center cursor-pointer" data-target="academic-section">
+                            <span class="text-5xl md:text-7xl inline-block transform transition-transform duration-200 hover:scale-125">🎓</span>
+                            <span class="emoji-label absolute -bottom-6 left-1/2 -translate-x-1/2 text-sm font-semibold text-gray-700 bg-gray-100 px-2 py-1 rounded-md shadow-sm">Academic</span>
+                        </div>
+                        <!-- Running Emoji -->
+                        <div class="emoji-container relative text-center cursor-pointer" data-target="running-section">
+                            <span class="text-5xl md:text-7xl inline-block transform transition-transform duration-200 hover:scale-125">🎽</span>
+                            <span class="emoji-label absolute -bottom-6 left-1/2 -translate-x-1/2 text-sm font-semibold text-gray-700 bg-gray-100 px-2 py-1 rounded-md shadow-sm">Running</span>
+                        </div>
+                        <!-- Sudokus Emoji -->
+                        <div class="emoji-container relative text-center cursor-pointer" data-target="sudokus-section">
+                            <span class="text-5xl md:text-7xl inline-block transform transition-transform duration-200 hover:scale-125">#️⃣</span>
+                            <span class="emoji-label absolute -bottom-6 left-1/2 -translate-x-1/2 text-sm font-semibold text-gray-700 bg-gray-100 px-2 py-1 rounded-md shadow-sm">Sudokus</span>
+                        </div>
+                    </div>
+
+                    <!-- Accordion Container -->
+                    <div class="space-y-4">
+                        <!-- Reading Section -->
+                        <div id="reading-section" class="accordion-item bg-white rounded-xl shadow-md overflow-hidden">
+                            <button class="accordion-header w-full flex justify-between items-center text-left p-6 font-bold text-xl text-gray-800 hover:bg-gray-50 transition duration-300">
+                                <div class="flex items-center">
+                                    <span class="text-3xl mr-4">📚</span>
+                                    <span>Reading</span>
+                                </div>
+                                <i class="fas fa-plus text-gray-500 accordion-icon"></i>
+                            </button>
+                            <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                                <div class="p-6 border-t border-gray-200">
+                                    <p class="text-gray-700">I learn so much from reading. Reading is probably my favourite thing to do. When I get home from school, I sit in my comfortable arm chair or in the garden if it is nice and I read a good book. There was a time I would get through 52 books each year but I haven't done that for a while now which is a shame. <br><br>I intended to select some of my favourite books and add them here but it is too hard to choose. You can see what I have read on my <a href="https://www.goodreads.com/review/list/33842579-luke-craig?order=d&sort=rating&view=reviews" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Goodreads review page</a> and sort by date or stars to see my faves (or the books I disliked). I always leave a star rating and I used to leave a one sentence review for each book but I gave that up as well...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Coding Section -->
+                        <div id="coding-section" class="accordion-item bg-white rounded-xl shadow-md overflow-hidden">
+                            <button class="accordion-header w-full flex justify-between items-center text-left p-6 font-bold text-xl text-gray-800 hover:bg-gray-50 transition duration-300">
+                                <div class="flex items-center">
+                                    <span class="text-3xl mr-4">👾</span>
+                                    <span>Coding</span>
+                                </div>
+                                <i class="fas fa-plus text-gray-500 accordion-icon"></i>
+                            </button>
+                            <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                                <div class="p-6 border-t border-gray-200">
+                                    <p class="text-gray-700">Your content about coding will go here.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Other accordion items with their new IDs -->
+                        <div id="drumming-section" class="accordion-item bg-white rounded-xl shadow-md overflow-hidden">
+                            <button class="accordion-header w-full flex justify-between items-center text-left p-6 font-bold text-xl text-gray-800 hover:bg-gray-50 transition duration-300">
+                                <div class="flex items-center">
+                                    <span class="text-3xl mr-4">🥁</span>
+                                    <span>Drumming</span>
+                                </div>
+                                <i class="fas fa-plus text-gray-500 accordion-icon"></i>
+                            </button>
+                            <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                                <div class="p-6 border-t border-gray-200">
+                                    <p class="text-gray-700">Your content about drumming will go here.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="academic-section" class="accordion-item bg-white rounded-xl shadow-md overflow-hidden">
+                            <button class="accordion-header w-full flex justify-between items-center text-left p-6 font-bold text-xl text-gray-800 hover:bg-gray-50 transition duration-300">
+                                <div class="flex items-center">
+                                    <span class="text-3xl mr-4">🎓</span>
+                                    <span>Academic</span>
+                                </div>
+                                <i class="fas fa-plus text-gray-500 accordion-icon"></i>
+                            </button>
+                            <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                                <div class="p-6 border-t border-gray-200">
+                                    <p class="text-gray-700">Your academic content will go here.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="running-section" class="accordion-item bg-white rounded-xl shadow-md overflow-hidden">
+                            <button class="accordion-header w-full flex justify-between items-center text-left p-6 font-bold text-xl text-gray-800 hover:bg-gray-50 transition duration-300">
+                                <div class="flex items-center">
+                                    <span class="text-3xl mr-4">🎽</span>
+                                    <span>Running</span>
+                                </div>
+                                <i class="fas fa-plus text-gray-500 accordion-icon"></i>
+                            </button>
+                            <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                                <div class="p-6 border-t border-gray-200">
+                                    <p class="text-gray-700">Your content about running will go here.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="sudokus-section" class="accordion-item bg-white rounded-xl shadow-md overflow-hidden">
+                            <button class="accordion-header w-full flex justify-between items-center text-left p-6 font-bold text-xl text-gray-800 hover:bg-gray-50 transition duration-300">
+                                <div class="flex items-center">
+                                    <span class="text-3xl mr-4">#️⃣</span>
+                                    <span>Sudoku</span>
+                                </div>
+                                <i class="fas fa-plus text-gray-500 accordion-icon"></i>
+                            </button>
+                            <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                                <div class="p-6 border-t border-gray-200">
+                                    <p class="text-gray-700">Your content about Sudokus will go here.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-             <!-- Adventures Page -->
+            <!-- Adventures Page -->
             <div id="adventures" class="page fade-in">
-                 <div class="max-w-4xl mx-auto">
+                <div class="max-w-4xl mx-auto">
                     <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Adventures</h1>
                 </div>
             </div>
 
-             <!-- Future Page -->
+            <!-- Future Page -->
             <div id="future" class="page fade-in">
-                 <div class="max-w-4xl mx-auto">
+                <div class="max-w-4xl mx-auto">
                     <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Future Initiatives</h1>
                 </div>
             </div>
@@ -389,7 +560,7 @@ This practical, hands-on work is underpinned by a deep commitment to academic re
         const passwordInput = document.getElementById("password");
         const submitButton = document.getElementById("submit-password");
         const passwordError = document.getElementById("password-error");
-        
+
         submitButton.addEventListener("click", checkPassword);
         passwordInput.addEventListener("keypress", function(event) {
             if (event.key === "Enter") {
@@ -398,18 +569,18 @@ This practical, hands-on work is underpinned by a deep commitment to academic re
         });
 
         // --- REFINED CONFETTI JAVASCRIPT ---
-        
+
         function fireConfettiCannon(originX, originY) {
             const confettiContainer = document.body;
             const confettiCount = 60;
             const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#ffeb3b', '#ff9800', '#4caf50'];
-            const gravity = 0.3; 
-            
+            const gravity = 0.3;
+
             for (let i = 0; i < confettiCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('confetti');
                 particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                
+
                 particle.style.left = originX + 'px';
                 particle.style.top = originY + 'px';
                 confettiContainer.appendChild(particle);
@@ -421,7 +592,7 @@ This practical, hands-on work is underpinned by a deep commitment to academic re
 
                 // 2. Corrected logic to ensure cannons fire outwards
                 let baseVx = Math.random() * 6 + 4; // Was: * 10 + 5
-                
+
                 if (originX > window.innerWidth / 2) {
                     // Right cannon fires right (positive vx)
                     vx = baseVx;
@@ -438,11 +609,11 @@ This practical, hands-on work is underpinned by a deep commitment to academic re
 
                 function update() {
                     vy += gravity;
-                    
+
                     totalX += vx;
                     totalY += vy;
                     rotation += rotationSpeed;
-                    
+
                     particle.style.transform = `translate(${totalX}px, ${totalY}px) rotate(${rotation}deg)`;
 
                     if (originY + totalY > window.innerHeight + 20) {
@@ -451,7 +622,7 @@ This practical, hands-on work is underpinned by a deep commitment to academic re
                         requestAnimationFrame(update);
                     }
                 }
-                
+
                 requestAnimationFrame(update);
             }
         }
@@ -461,7 +632,7 @@ This practical, hands-on work is underpinned by a deep commitment to academic re
                 const rect = passwordInput.getBoundingClientRect();
                 fireConfettiCannon(rect.left, rect.top + rect.height / 2);
                 fireConfettiCannon(rect.right, rect.top + rect.height / 2);
-                
+
                 setTimeout(() => {
                     passwordScreen.classList.add("hidden");
                     mainContent.classList.remove("hidden");
@@ -479,16 +650,16 @@ This practical, hands-on work is underpinned by a deep commitment to academic re
         // Navigation functionality
         const navLinks = document.querySelectorAll(".nav-link");
         const pages = document.querySelectorAll(".page");
-        
+
         navLinks.forEach(link => {
             link.addEventListener("click", function(e) {
                 e.preventDefault();
-                
+
                 const targetPage = this.getAttribute("data-page");
-                
+
                 navLinks.forEach(link => link.classList.remove("active"));
                 this.classList.add("active");
-                
+
                 pages.forEach(page => {
                     page.classList.remove("active");
                     if (page.id === targetPage) {
@@ -499,143 +670,198 @@ This practical, hands-on work is underpinned by a deep commitment to academic re
         });
         // --- SLIDESHOW LOGIC ---
 
-// !! REPLACE THESE WITH YOUR IMAGE URLS FROM GOOGLE PHOTOS !!
-const imageUrls = [
-    //InPinn
-    'https://lh3.googleusercontent.com/pw/AP1GczNfsj84RParzbRdmz9tvEnu9-tS3GUZqzzmOxKvjUEqPgz9UjIQi82-Cpq8Y6Q5nvVu548MaSd1OT49ZOKecPJdIKv7-mXNdkeUqAH8OsKpApU2_urSJC-gMdjmHxHgIJ7dHiwUjJo1YwknUkRCNkEQoQ=w1404-h1404-s-no-gm?authuser=0',
-    //Lochnagar
-    'https://lh3.googleusercontent.com/pw/AP1GczP0I0olxCLLx2z1fUIjLGYmw2RBwyab_glmMmid-M9tVG0N0txD745p0qHZwAgngHVlPLrK-AK3Pt9SeD1l4x80oXaUDT552JaVWEttCQ98VQOjOBFmJa9cjosMeh3PF9ZtAaktuK7rsNnEEufQdwoJNg=w1868-h1404-s-no-gm?authuser=0',
-    //Snake
-    'https://lh3.googleusercontent.com/pw/AP1GczOd7s-dA8rFHgNPAzsbxWnEXGGBqfKKn_N_y3eiMayJev-u0o4axjIhgsqLtOTHxm9uvX_z2OBGkeqSMQGcmaYnXlz7pwvdl1YiZUAHdEOGn8i6GyirPneAHzmnIg8KViHE8WFmZJfLo3NYxZQtlsYtaA=w1404-h1404-s-no-gm?authuser=0',
-    //Arctic Triple
-    'https://lh3.googleusercontent.com/pw/AP1GczNTTgF9zk8D8T1_Zhf-vh13kdrMyAdtDR_CRrOdcFko97-c0ns4uEO4snepDC7ukyXNJIC7rRBN1KKZGy-eeBuwu5WClJv6Fljpb0hQx7T6PGz2skN3Y1okpzpZ6ikZk4AWZfNQbNfEUi3ZpeLE0ArZdQ=w1404-h1404-s-no-gm?authuser=0',
-    //Lions
-    'https://lh3.googleusercontent.com/pw/AP1GczMHKHgU0WgGUxaBXpNtxAG_2QRHlDVfG002nDtqArws_dSsxpjzQVPnXnAPLX-upo4NzouqaHCYXdPWv8Rxs1zm8q7rWZJmQ7BIa5IYhwt_uEKK_mFuHnRDFBRIwWwSixeJUaVAfzH8mLYfXw9Q1UBYXw=w1404-h1404-s-no-gm?authuser=0',
-    //BG
-    'https://lh3.googleusercontent.com/pw/AP1GczMtDzDM2fOgPpuApZVQbCZcVQGcdlENZVHyA2yCrZx9TemkkZ_qxVnMhp81CxSVEsyXgMvtsqltafdXL5jOWqd4aaAnjvlMKesfjZy_8LYgajAnDmlPLQGT8Nb6KJ6a_pkY2XAH9JhItoGy8nrHR1SBzA=w923-h924-s-no-gm?authuser=0',
-    //Waterfall
-    'https://lh3.googleusercontent.com/pw/AP1GczMZc4VJcyOSumdmaN6LoCUUNdCGw0HQbYwcMlQo5vYOf0X-jXzDGef66olko0BVumNzHz49jnQZcKJk5040DA6k7KVK4QBoi03c7ka3L18H76KjuWV3ZEMx14vD3OTrKjd1Z5VhlHh2VWSfgBdrSYSegg=w1868-h1404-s-no-gm?authuser=0',
-    //Lejog
-    'https://lh3.googleusercontent.com/pw/AP1GczPI1OVv7DO3atH8BEpa5m6ZLBuq4I-N0_fVsDC4WX6PSqUk-YbbPYhTsm30fRXPM4ziXFCve7LACHIekY30G4tklG-GABpN8e3jejsC4QTjmh2QDbV1lvySaKqjKIabZ3mlyfH93dEMRuSi94qVTlpJFQ=w1870-h1404-s-no-gm?authuser=0',
-    //Cuba
-    'https://lh3.googleusercontent.com/pw/AP1GczOW0UWGv7NdCJhmMQbC5CXGMnA2fMEbnrnIxj0fhp7IvzMkCB4KixhjJIe0pBhV3nP4ZzyKk9XPHuLWhh1r6t1jJV9US4Qf44EejRFLreR7Ua0sFgbh5599NdiskduWItOKCDH4o21cVkAHlxLs9CC0lg=w1868-h1404-s-no-gm?authuser=0',
-    //Switzerland
-    'https://lh3.googleusercontent.com/pw/AP1GczNWl8ICkm-iAFatrj_iRv3Tz4EXpHLLa1cB3yBYB8ssv1Bc_3oWfYMpQ-8dv5C71N82SaRLbxBgtsZGOE6NYfeccR8BYWislYin2NBq6aHq4KpD3_wsMA7Hz38NPSxRtnIiY71INweds8OMaDTxV59L2Q=w1870-h1404-s-no-gm?authuser=0',
-    //Gliding
-    'https://lh3.googleusercontent.com/pw/AP1GczPYvRjGXV-dlQw1nMaS7oXCMoQhvrMs5jy4DEyzXQ8rfjIe6HT4uZ3jWozTiTDrcVi7opgeGnV0YGwWtayzCZTzrsbR7z3SRPv-P8T1utWmquCHU4Pw-q9uUNmc1iWKLunwZ7AQVTEPQvJhBgJR1OfsWw=w1404-h1404-s-no-gm?authuser=0',
-    //Northern Traverse
-    'https://lh3.googleusercontent.com/pw/AP1GczPdShgNXQg_ac7KJ3-6ZNEjYEU9wtB6lUAgqEhdg3ytBvX3e6kEp3nLYkd6921MgtD2X_r1HQ9v55-CFtUzDKqkFcJXH0klWlHW_M-fCrgrlIOpeatvlL8NxfRe52WaolDDwi8ShXtkrvoUv8recz43tg=w1870-h1404-s-no-gm?authuser=0',
-    //Shed
-    'https://lh3.googleusercontent.com/pw/AP1GczM4yEV4FYsoT7F4M0K0BvsXs5y7L1JIQZ003tGXjfc3V6ETJa-W-ZEMeYIVbA5dwVC4iHbLuVL-B17kfuk11p_S5JhXLSReoOyzriNF5UXylKrFEW-IM2NM922j9-ziNsOZfmu1vIHlS9V4PgLmCpUfbA=w1404-h1404-s-no-gm?authuser=0',
-     //Mizmal
-    'https://lh3.googleusercontent.com/pw/AP1GczPigD1C6ST6BLaRJXkuh43xpBn9fFPnXDbefYgwFZYukkk-ZW4RizuRMpAiwgaDpGoYe8dPa_TsAGWg7jYdE5YI9bWCetKuWGPu2d4_739H62ygpiNUwIHoyIgTuuj8bDtQLHjuh-EHOcVfNrF0-Ym2aA=w1404-h1404-s-no-gm?authuser=0',
-    //Turtle
-    'https://lh3.googleusercontent.com/pw/AP1GczPBz2fzL_13dIaXFazqm7DGAJ2TzxAckPmXzO8lrYCivVzHC6t3f_YNQYZGSBbYw1qcLRYtYvUpgZ3NSjjMAXT-vodnfgVYgyVrk9SD4eM5aViLWKNWV-WfuquP7hvpP6sJ8IXzXRNTNzwVzhVotKFzeA=w1404-h1404-s-no-gm?authuser=0',
-    //Patagonia
-    'https://lh3.googleusercontent.com/pw/AP1GczMUQ1t48eMYUMd60Qqn6byXaiAPbb4MLDXr4mSMk1LIDIjV5-Ekvw6nojxvnIPrKh9Nro3-b2MqjqVuTCTvZeI04piRNNdkJUQZiVEFB21vuDJxNXkV_fYQbzjFon9JhReVB1RF9_gsscLfYuzmtBXaIg=w1054-h1404-s-no-gm?authuser=0'
-    // Add more of your image URLs here
-];
+        // !! REPLACE THESE WITH YOUR IMAGE URLS FROM GOOGLE PHOTOS !!
+        const imageUrls = [
+            //Mizmal
+            'https://lh3.googleusercontent.com/pw/AP1GczPigD1C6ST6BLaRJXkuh43xpBn9fFPnXDbefYgwFZYukkk-ZW4RizuRMpAiwgaDpGoYe8dPa_TsAGWg7jYdE5YI9bWCetKuWGPu2d4_739H62ygpiNUwIHoyIgTuuj8bDtQLHjuh-EHOcVfNrF0-Ym2aA=w1404-h1404-s-no-gm?authuser=0',
+            //Turtle
+            'https://lh3.googleusercontent.com/pw/AP1GczPBz2fzL_13dIaXFazqm7DGAJ2TzxAckPmXzO8lrYCivVzHC6t3f_YNQYZGSBbYw1qcLRYtYvUpgZ3NSjjMAXT-vodnfgVYgyVrk9SD4eM5aViLWKNWV-WfuquP7hvpP6sJ8IXzXRNTNzwVzhVotKFzeA=w1404-h1404-s-no-gm?authuser=0',
+            //Patagonia
+            'https://lh3.googleusercontent.com/pw/AP1GczMUQ1t48eMYUMd60Qqn6byXaiAPbb4MLDXr4mSMk1LIDIjV5-Ekvw6nojxvnIPrKh9Nro3-b2MqjqVuTCTvZeI04piRNNdkJUQZiVEFB21vuDJxNXkV_fYQbzjFon9JhReVB1RF9_gsscLfYuzmtBXaIg=w1054-h1404-s-no-gm?authuser=0',
+            //InPinn
+            'https://lh3.googleusercontent.com/pw/AP1GczNfsj84RParzbRdmz9tvEnu9-tS3GUZqzzmOxKvjUEqPgz9UjIQi82-Cpq8Y6Q5nvVu548MaSd1OT49ZOKecPJdIKv7-mXNdkeUqAH8OsKpApU2_urSJC-gMdjmHxHgIJ7dHiwUjJo1YwknUkRCNkEQoQ=w1404-h1404-s-no-gm?authuser=0',
+            //Lochnagar
+            'https://lh3.googleusercontent.com/pw/AP1GczP0I0olxCLLx2z1fUIjLGYmw2RBwyab_glmMmid-M9tVG0N0txD745p0qHZwAgngHVlPLrK-AK3Pt9SeD1l4x80oXaUDT552JaVWEttCQ98VQOjOBFmJa9cjosMeh3PF9ZtAaktuK7rsNnEEufQdwoJNg=w1868-h1404-s-no-gm?authuser=0',
+            //Snake
+            'https://lh3.googleusercontent.com/pw/AP1GczOd7s-dA8rFHgNPAzsbxWnEXGGBqfKKn_N_y3eiMayJev-u0o4axjIhgsqLtOTHxm9uvX_z2OBGkeqSMQGcmaYnXlz7pwvdl1YiZUAHdEOGn8i6GyirPneAHzmnIg8KViHE8WFmZJfLo3NYxZQtlsYtaA=w1404-h1404-s-no-gm?authuser=0',
+            //Arctic Triple
+            'https://lh3.googleusercontent.com/pw/AP1GczNTTgF9zk8D8T1_Zhf-vh13kdrMyAdtDR_CRrOdcFko97-c0ns4uEO4snepDC7ukyXNJIC7rRBN1KKZGy-eeBuwu5WClJv6Fljpb0hQx7T6PGz2skN3Y1okpzpZ6ikZk4AWZfNQbNfEUi3ZpeLE0ArZdQ=w1404-h1404-s-no-gm?authuser=0',
+            //Lions
+            'https://lh3.googleusercontent.com/pw/AP1GczMHKHgU0WgGUxaBXpNtxAG_2QRHlDVfG002nDtqArws_dSsxpjzQVPnXnAPLX-upo4NzouqaHCYXdPWv8Rxs1zm8q7rWZJmQ7BIa5IYhwt_uEKK_mFuHnRDFBRIwWwSixeJUaVAfzH8mLYfXw9Q1UBYXw=w1404-h1404-s-no-gm?authuser=0',
+            //BG
+            'https://lh3.googleusercontent.com/pw/AP1GczMtDzDM2fOgPpuApZVQbCZcVQGcdlENZVHyA2yCrZx9TemkkZ_qxVnMhp81CxSVEsyXgMvtsqltafdXL5jOWqd4aaAnjvlMKesfjZy_8LYgajAnDmlPLQGT8Nb6KJ6a_pkY2XAH9JhItoGy8nrHR1SBzA=w923-h924-s-no-gm?authuser=0',
+            //Waterfall
+            'https://lh3.googleusercontent.com/pw/AP1GczMZc4VJcyOSumdmaN6LoCUUNdCGw0HQbYwcMlQo5vYOf0X-jXzDGef66olko0BVumNzHz49jnQZcKJk5040DA6k7KVK4QBoi03c7ka3L18H76KjuWV3ZEMx14vD3OTrKjd1Z5VhlHh2VWSfgBdrSYSegg=w1868-h1404-s-no-gm?authuser=0',
+            //Lejog
+            'https://lh3.googleusercontent.com/pw/AP1GczPI1OVv7DO3atH8BEpa5m6ZLBuq4I-N0_fVsDC4WX6PSqUk-YbbPYhTsm30fRXPM4ziXFCve7LACHIekY30G4tklG-GABpN8e3jejsC4QTjmh2QDbV1lvySaKqjKIabZ3mlyfH93dEMRuSi94qVTlpJFQ=w1870-h1404-s-no-gm?authuser=0',
+            //Cuba
+            'https://lh3.googleusercontent.com/pw/AP1GczOW0UWGv7NdCJhmMQbC5CXGMnA2fMEbnrnIxj0fhp7IvzMkCB4KixhjJIe0pBhV3nP4ZzyKk9XPHuLWhh1r6t1jJV9US4Qf44EejRFLreR7Ua0sFgbh5599NdiskduWItOKCDH4o21cVkAHlxLs9CC0lg=w1868-h1404-s-no-gm?authuser=0',
+            //Switzerland
+            'https://lh3.googleusercontent.com/pw/AP1GczNWl8ICkm-iAFatrj_iRv3Tz4EXpHLLa1cB3yBYB8ssv1Bc_3oWfYMpQ-8dv5C71N82SaRLbxBgtsZGOE6NYfeccR8BYWislYin2NBq6aHq4KpD3_wsMA7Hz38NPSxRtnIiY71INweds8OMaDTxV59L2Q=w1870-h1404-s-no-gm?authuser=0',
+            //Gliding
+            'https://lh3.googleusercontent.com/pw/AP1GczPYvRjGXV-dlQw1nMaS7oXCMoQhvrMs5jy4DEyzXQ8rfjIe6HT4uZ3jWozTiTDrcVi7opgeGnV0YGwWtayzCZTzrsbR7z3SRPv-P8T1utWmquCHU4Pw-q9uUNmc1iWKLunwZ7AQVTEPQvJhBgJR1OfsWw=w1404-h1404-s-no-gm?authuser=0',
+            //Northern Traverse
+            'https://lh3.googleusercontent.com/pw/AP1GczPdShgNXQg_ac7KJ3-6ZNEjYEU9wtB6lUAgqEhdg3ytBvX3e6kEp3nLYkd6921MgtD2X_r1HQ9v55-CFtUzDKqkFcJXH0klWlHW_M-fCrgrlIOpeatvlL8NxfRe52WaolDDwi8ShXtkrvoUv8recz43tg=w1870-h1404-s-no-gm?authuser=0',
+            //Shed
+            'https://lh3.googleusercontent.com/pw/AP1GczM4yEV4FYsoT7F4M0K0BvsXs5y7L1JIQZ003tGXjfc3V6ETJa-W-ZEMeYIVbA5dwVC4iHbLuVL-B17kfuk11p_S5JhXLSReoOyzriNF5UXylKrFEW-IM2NM922j9-ziNsOZfmu1vIHlS9V4PgLmCpUfbA=w1404-h1404-s-no-gm?authuser=0'
+            // Add more of your image URLs here
+        ];
 
-const slideshowContainer = document.getElementById('slideshow-container');
-const dotsContainer = document.getElementById('dots-container');
-let slideIndex = 0;
-let slideInterval;
-let isPaused = false; // The new state variable
+        const slideshowContainer = document.getElementById('slideshow-container');
+        const dotsContainer = document.getElementById('dots-container');
+        let slideIndex = 0;
+        let slideInterval;
+        let isPaused = false; // The new state variable
 
-// Create slide and dot elements dynamically
-imageUrls.forEach((url, index) => {
-    // Create slide
-    const slide = document.createElement('div');
-    slide.classList.add('slide');
-    slide.innerHTML = `<img src="${url}" alt="Slideshow image ${index + 1}">`;
-    slideshowContainer.insertBefore(slide, document.getElementById('prev-btn'));
+        // Create slide and dot elements dynamically
+        imageUrls.forEach((url, index) => {
+            // Create slide
+            const slide = document.createElement('div');
+            slide.classList.add('slide');
+            slide.innerHTML = `<img src="${url}" alt="Slideshow image ${index + 1}">`;
+            slideshowContainer.insertBefore(slide, document.getElementById('prev-btn'));
 
-    // Create dot
-    const dot = document.createElement('span');
-    dot.classList.add('dot');
-    dot.setAttribute('onclick', `currentSlide(${index})`);
-    dotsContainer.appendChild(dot);
-});
+            // Create dot
+            const dot = document.createElement('span');
+            dot.classList.add('dot');
+            dot.setAttribute('onclick', `currentSlide(${index})`);
+            dotsContainer.appendChild(dot);
+        });
 
-const slides = document.querySelectorAll('.slide');
-const dots = document.querySelectorAll('.dot');
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
 
-function showSlide(n) {
-    slideIndex = (n + slides.length) % slides.length; // Loop around
+        function showSlide(n) {
+            slideIndex = (n + slides.length) % slides.length; // Loop around
 
-    slides.forEach(slide => slide.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
 
-    slides[slideIndex].classList.add('active');
-    dots[slideIndex].classList.add('active');
-}
+            slides[slideIndex].classList.add('active');
+            dots[slideIndex].classList.add('active');
+        }
 
-// Functions for next/prev and current slide
-function moveSlide(n) {
-    showSlide(slideIndex += n);
-    resetInterval();
-}
+        // Functions for next/prev and current slide
+        function moveSlide(n) {
+            showSlide(slideIndex += n);
+            resetInterval();
+        }
 
-function currentSlide(n) {
-    showSlide(n);
-    resetInterval();
-}
+        function currentSlide(n) {
+            showSlide(n);
+            resetInterval();
+        }
 
-// Automatic slideshow interval
-function startInterval() {
-    slideInterval = setInterval(() => {
-        moveSlide(1);
-    }, 3000); // Change image every 3 seconds
-}
+        // Automatic slideshow interval
+        function startInterval() {
+            slideInterval = setInterval(() => {
+                moveSlide(1);
+            }, 3000); // Change image every 3 seconds
+        }
 
-function resetInterval() {
-    // If the mouse is over the slideshow, do not restart the timer.
-    if (isPaused) {
-        return; 
-    }
-    clearInterval(slideInterval);
-    startInterval();
-}
+        function resetInterval() {
+            // If the mouse is over the slideshow, do not restart the timer.
+            if (isPaused) {
+                return;
+            }
+            clearInterval(slideInterval);
+            startInterval();
+        }
 
-// Event listeners for arrows
-document.getElementById('prev-btn').addEventListener('click', () => moveSlide(-1));
-document.getElementById('next-btn').addEventListener('click', () => moveSlide(1));
+        // Event listeners for arrows
+        document.getElementById('prev-btn').addEventListener('click', () => moveSlide(-1));
+        document.getElementById('next-btn').addEventListener('click', () => moveSlide(1));
 
-// Add click navigation to the image container
-slideshowContainer.addEventListener('click', function(event) {
-    // Do nothing if the user clicked directly on an arrow or a dot
-    if (event.target.classList.contains('dot') || event.target.id === 'prev-btn' || event.target.id === 'next-btn') {
-        return;
-    }
-    
-    // Get the bounding rectangle of the slideshow container
-    const rect = slideshowContainer.getBoundingClientRect();
-    // Calculate the horizontal midpoint of the container
-    const midpoint = rect.left + rect.width / 2;
-    
-    // If click is on the right half, go to the next slide
-    if (event.clientX > midpoint) {
-        moveSlide(1);
-    } 
-    // If click is on the left half, go to the previous slide
-    else {
-        moveSlide(-1);
-    }
-});
-// --- UPDATED: Pause slideshow on hover ---
-slideshowContainer.addEventListener('mouseenter', () => {
-    isPaused = true; // Set the paused state
-    clearInterval(slideInterval);
-});
+        // Add click navigation to the image container
+        slideshowContainer.addEventListener('click', function(event) {
+            // Do nothing if the user clicked directly on an arrow or a dot
+            if (event.target.classList.contains('dot') || event.target.id === 'prev-btn' || event.target.id === 'next-btn') {
+                return;
+            }
 
-slideshowContainer.addEventListener('mouseleave', () => {
-    isPaused = false; // Unset the paused state
-    resetInterval(); // Resume the timer
-});
+            // Get the bounding rectangle of the slideshow container
+            const rect = slideshowContainer.getBoundingClientRect();
+            // Calculate the horizontal midpoint of the container
+            const midpoint = rect.left + rect.width / 2;
 
-// Initial setup
-showSlide(0);
-startInterval();
+            // If click is on the right half, go to the next slide
+            if (event.clientX > midpoint) {
+                moveSlide(1);
+            }
+            // If click is on the left half, go to the previous slide
+            else {
+                moveSlide(-1);
+            }
+        });
+        // --- UPDATED: Pause slideshow on hover ---
+        slideshowContainer.addEventListener('mouseenter', () => {
+            isPaused = true; // Set the paused state
+            clearInterval(slideInterval);
+        });
+
+        slideshowContainer.addEventListener('mouseleave', () => {
+            isPaused = false; // Unset the paused state
+            resetInterval(); // Resume the timer
+        });
+
+        // Initial setup
+        showSlide(0);
+        startInterval();
+        // --- ACCORDION & EMOJI NAVIGATION LOGIC ---
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        const emojiContainers = document.querySelectorAll('.emoji-container');
+
+        // Function to open a specific accordion item
+        function openAccordion(header) {
+            if (!header.classList.contains('active')) {
+                header.click();
+            }
+        }
+
+        // Attach click listener to each accordion header
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const accordionContent = header.nextElementSibling;
+                const accordionIcon = header.querySelector('.accordion-icon');
+
+                // Toggle active class for styling
+                header.classList.toggle('active');
+
+                if (header.classList.contains('active')) {
+                    // Open the accordion
+                    accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
+                    accordionIcon.classList.remove('fa-plus');
+                    accordionIcon.classList.add('fa-minus');
+                } else {
+                    // Close the accordion
+                    accordionContent.style.maxHeight = '0px';
+                    accordionIcon.classList.remove('fa-minus');
+                    accordionIcon.classList.add('fa-plus');
+                }
+            });
+        });
+
+        // Attach click listener to each emoji container
+        emojiContainers.forEach(container => {
+            container.addEventListener('click', function() {
+                const targetId = this.dataset.target;
+                const targetSection = document.getElementById(targetId);
+
+                if (targetSection) {
+                    const targetHeader = targetSection.querySelector('.accordion-header');
+
+                    // Open the corresponding accordion section
+                    openAccordion(targetHeader);
+
+                    // Smoothly scroll to the section
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
     </script>
 </body>
+
 </html>
