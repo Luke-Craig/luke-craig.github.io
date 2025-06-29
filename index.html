@@ -59,6 +59,30 @@
             z-index: 10000;  /* Ensure it's on top of everything */
             pointer-events: none; /* Make sure the confetti can't be clicked */
         }
+        /* CSS for the Slideshow */
+.slide {
+    display: none;
+    transition: opacity 0.5s ease-in-out;
+}
+.slide.active {
+    display: block;
+}
+.slide img {
+    width: 100%;
+    vertical-align: middle; /* Removes bottom space under image */
+}
+.dot {
+    cursor: pointer;
+    height: 12px;
+    width: 12px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+.dot.active, .dot:hover {
+    background-color: #717171;
+}
     </style>
 </head>
 <body class="min-h-screen">
@@ -121,7 +145,7 @@
                     <div class="bg-white rounded-xl shadow-md p-6 mb-8">
                         <p class="text-2xl font-semibold text-gray-800 mb-4 text-center">To empower others to reach their potential, be creative and live life to the full.</p>
                         
-                        <p class="text-gray-700 mb-4">That is my mission statement and each word has been carefully considered. I try to think about this statement whenever I have a big decision to make. <br><br>I intend to use this space to keep a record of all the things I am proud of and also to note down things I still want to achieve.</p> 
+                        <p class="text-gray-700 mb-4">This website is a portfolio of things I have done in my life which I am proud of. Below are some examples of my adventures over the years...</p> 
                         
                         <!--<div class="flex flex-col md:flex-row gap-6 mt-8">-->
                         <!--    <div class="bg-blue-50 rounded-lg p-5 flex-1">-->
@@ -135,30 +159,45 @@
                         <!--    </div>-->
                         <!--</div>-->
                     </div>
+                    <!-- Slideshow Container -->
+<div class="max-w-4xl mx-auto my-8">
+    <div id="slideshow-container" class="relative rounded-lg shadow-2xl overflow-hidden">
+        <!-- Slides will be inserted here by JavaScript -->
+
+        <!-- Next/previous buttons -->
+        <a id="prev-btn" class="absolute top-1/2 left-0 transform -translate-y-1/2 p-4 text-white font-bold text-2xl cursor-pointer hover:bg-black/50 transition duration-300">&#10094;</a>
+        <a id="next-btn" class="absolute top-1/2 right-0 transform -translate-y-1/2 p-4 text-white font-bold text-2xl cursor-pointer hover:bg-black/50 transition duration-300">&#10095;</a>
+
+        <!-- Dots container -->
+        <div id="dots-container" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+            <!-- Dots will be inserted here by JavaScript -->
+        </div>
+    </div>
+</div>
                     
-                    <div class="bg-white rounded-xl shadow-md p-6">
-                        <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-center">Three things I am (currently) most proud of:</h2>
+                    <!--<div class="bg-white rounded-xl shadow-md p-6">-->
+                    <!--    <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-center">Three things I am (currently) most proud of:</h2>-->
                         
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div class="text-center">
-                                <div class="w-24 h-24 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full mx-auto flex items-center justify-center text-white text-2xl font-bold">BG</div>
-                                <h3 class="mt-3 font-medium">Bob Graham Round</h3>
-                                <p class="text-sm text-gray-600">A Lake District <a href="http://bobgrahamclub.org.uk/index.php?page=memdata&mem=2835" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">adventure</a></p>
-                            </div>
+                    <!--    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">-->
+                    <!--        <div class="text-center">-->
+                    <!--            <div class="w-24 h-24 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full mx-auto flex items-center justify-center text-white text-2xl font-bold">BG</div>-->
+                    <!--            <h3 class="mt-3 font-medium">Bob Graham Round</h3>-->
+                    <!--            <p class="text-sm text-gray-600">A Lake District <a href="http://bobgrahamclub.org.uk/index.php?page=memdata&mem=2835" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">adventure</a></p>-->
+                    <!--        </div>-->
                             
-                            <div class="text-center">
-                                <div class="w-24 h-24 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full mx-auto flex items-center justify-center text-white text-2xl font-bold"><></div>
-                                <h3 class="mt-3 font-medium">Coding</h3>
-                                <p class="text-sm text-gray-600">Teaching myself to code useful <a href="https://www.eduscripts.uk/about" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">things</a></p>
-                            </div>
+                    <!--        <div class="text-center">-->
+                    <!--            <div class="w-24 h-24 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full mx-auto flex items-center justify-center text-white text-2xl font-bold"><></div>-->
+                    <!--            <h3 class="mt-3 font-medium">Coding</h3>-->
+                    <!--            <p class="text-sm text-gray-600">Teaching myself to code useful <a href="https://www.eduscripts.uk/about" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">things</a></p>-->
+                    <!--        </div>-->
                             
-                            <div class="text-center">
-                                <div class="w-24 h-24 bg-gradient-to-br from-green-400 to-green-600 rounded-full mx-auto flex items-center justify-center text-white text-2xl font-bold">#</div>
-                                <h3 class="mt-3 font-medium">Sudoku</h3>
-                                <p class="text-sm text-gray-600">Solving Phistomefel's <a href="https://drive.google.com/file/d/1uWNzLUAHQVND1sW4ZPJuqWwaF_RVoTai/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Ancient Wall</a></p>
-                            </div>
-                        </div>
-                    </div>
+                    <!--        <div class="text-center">-->
+                    <!--            <div class="w-24 h-24 bg-gradient-to-br from-green-400 to-green-600 rounded-full mx-auto flex items-center justify-center text-white text-2xl font-bold">#</div>-->
+                    <!--            <h3 class="mt-3 font-medium">Sudoku</h3>-->
+                    <!--            <p class="text-sm text-gray-600">Solving Phistomefel's <a href="https://drive.google.com/file/d/1uWNzLUAHQVND1sW4ZPJuqWwaF_RVoTai/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Ancient Wall</a></p>-->
+                    <!--        </div>-->
+                    <!--    </div>-->
+                    <!--</div>-->
                 </div>
             </div>
 
@@ -324,6 +363,108 @@
                 });
             });
         });
+        // --- SLIDESHOW LOGIC ---
+
+// !! REPLACE THESE WITH YOUR IMAGE URLS FROM GOOGLE PHOTOS !!
+const imageUrls = [
+    //InPinn
+    'https://lh3.googleusercontent.com/pw/AP1GczNfsj84RParzbRdmz9tvEnu9-tS3GUZqzzmOxKvjUEqPgz9UjIQi82-Cpq8Y6Q5nvVu548MaSd1OT49ZOKecPJdIKv7-mXNdkeUqAH8OsKpApU2_urSJC-gMdjmHxHgIJ7dHiwUjJo1YwknUkRCNkEQoQ=w1404-h1404-s-no-gm?authuser=0',
+    //Lochnagar
+    'https://lh3.googleusercontent.com/pw/AP1GczP0I0olxCLLx2z1fUIjLGYmw2RBwyab_glmMmid-M9tVG0N0txD745p0qHZwAgngHVlPLrK-AK3Pt9SeD1l4x80oXaUDT552JaVWEttCQ98VQOjOBFmJa9cjosMeh3PF9ZtAaktuK7rsNnEEufQdwoJNg=w1868-h1404-s-no-gm?authuser=0',
+    //Snake
+    'https://lh3.googleusercontent.com/pw/AP1GczOd7s-dA8rFHgNPAzsbxWnEXGGBqfKKn_N_y3eiMayJev-u0o4axjIhgsqLtOTHxm9uvX_z2OBGkeqSMQGcmaYnXlz7pwvdl1YiZUAHdEOGn8i6GyirPneAHzmnIg8KViHE8WFmZJfLo3NYxZQtlsYtaA=w1404-h1404-s-no-gm?authuser=0',
+    //Arctic Triple
+    'https://lh3.googleusercontent.com/pw/AP1GczNTTgF9zk8D8T1_Zhf-vh13kdrMyAdtDR_CRrOdcFko97-c0ns4uEO4snepDC7ukyXNJIC7rRBN1KKZGy-eeBuwu5WClJv6Fljpb0hQx7T6PGz2skN3Y1okpzpZ6ikZk4AWZfNQbNfEUi3ZpeLE0ArZdQ=w1404-h1404-s-no-gm?authuser=0',
+    //Lions
+    'https://lh3.googleusercontent.com/pw/AP1GczMHKHgU0WgGUxaBXpNtxAG_2QRHlDVfG002nDtqArws_dSsxpjzQVPnXnAPLX-upo4NzouqaHCYXdPWv8Rxs1zm8q7rWZJmQ7BIa5IYhwt_uEKK_mFuHnRDFBRIwWwSixeJUaVAfzH8mLYfXw9Q1UBYXw=w1404-h1404-s-no-gm?authuser=0',
+    //BG
+    'https://lh3.googleusercontent.com/pw/AP1GczMtDzDM2fOgPpuApZVQbCZcVQGcdlENZVHyA2yCrZx9TemkkZ_qxVnMhp81CxSVEsyXgMvtsqltafdXL5jOWqd4aaAnjvlMKesfjZy_8LYgajAnDmlPLQGT8Nb6KJ6a_pkY2XAH9JhItoGy8nrHR1SBzA=w923-h924-s-no-gm?authuser=0',
+    //Waterfall
+    'https://lh3.googleusercontent.com/pw/AP1GczMZc4VJcyOSumdmaN6LoCUUNdCGw0HQbYwcMlQo5vYOf0X-jXzDGef66olko0BVumNzHz49jnQZcKJk5040DA6k7KVK4QBoi03c7ka3L18H76KjuWV3ZEMx14vD3OTrKjd1Z5VhlHh2VWSfgBdrSYSegg=w1868-h1404-s-no-gm?authuser=0',
+    //Lejog
+    'https://lh3.googleusercontent.com/pw/AP1GczPI1OVv7DO3atH8BEpa5m6ZLBuq4I-N0_fVsDC4WX6PSqUk-YbbPYhTsm30fRXPM4ziXFCve7LACHIekY30G4tklG-GABpN8e3jejsC4QTjmh2QDbV1lvySaKqjKIabZ3mlyfH93dEMRuSi94qVTlpJFQ=w1870-h1404-s-no-gm?authuser=0',
+    //Cuba
+    'https://lh3.googleusercontent.com/pw/AP1GczOW0UWGv7NdCJhmMQbC5CXGMnA2fMEbnrnIxj0fhp7IvzMkCB4KixhjJIe0pBhV3nP4ZzyKk9XPHuLWhh1r6t1jJV9US4Qf44EejRFLreR7Ua0sFgbh5599NdiskduWItOKCDH4o21cVkAHlxLs9CC0lg=w1868-h1404-s-no-gm?authuser=0',
+    //Switzerland
+    'https://lh3.googleusercontent.com/pw/AP1GczNWl8ICkm-iAFatrj_iRv3Tz4EXpHLLa1cB3yBYB8ssv1Bc_3oWfYMpQ-8dv5C71N82SaRLbxBgtsZGOE6NYfeccR8BYWislYin2NBq6aHq4KpD3_wsMA7Hz38NPSxRtnIiY71INweds8OMaDTxV59L2Q=w1870-h1404-s-no-gm?authuser=0',
+    //Gliding
+    'https://lh3.googleusercontent.com/pw/AP1GczPYvRjGXV-dlQw1nMaS7oXCMoQhvrMs5jy4DEyzXQ8rfjIe6HT4uZ3jWozTiTDrcVi7opgeGnV0YGwWtayzCZTzrsbR7z3SRPv-P8T1utWmquCHU4Pw-q9uUNmc1iWKLunwZ7AQVTEPQvJhBgJR1OfsWw=w1404-h1404-s-no-gm?authuser=0',
+    //Northern Traverse
+    'https://lh3.googleusercontent.com/pw/AP1GczPdShgNXQg_ac7KJ3-6ZNEjYEU9wtB6lUAgqEhdg3ytBvX3e6kEp3nLYkd6921MgtD2X_r1HQ9v55-CFtUzDKqkFcJXH0klWlHW_M-fCrgrlIOpeatvlL8NxfRe52WaolDDwi8ShXtkrvoUv8recz43tg=w1870-h1404-s-no-gm?authuser=0',
+    //Shed
+    'https://lh3.googleusercontent.com/pw/AP1GczM4yEV4FYsoT7F4M0K0BvsXs5y7L1JIQZ003tGXjfc3V6ETJa-W-ZEMeYIVbA5dwVC4iHbLuVL-B17kfuk11p_S5JhXLSReoOyzriNF5UXylKrFEW-IM2NM922j9-ziNsOZfmu1vIHlS9V4PgLmCpUfbA=w1404-h1404-s-no-gm?authuser=0',
+     //Mizmal
+    'https://lh3.googleusercontent.com/pw/AP1GczPigD1C6ST6BLaRJXkuh43xpBn9fFPnXDbefYgwFZYukkk-ZW4RizuRMpAiwgaDpGoYe8dPa_TsAGWg7jYdE5YI9bWCetKuWGPu2d4_739H62ygpiNUwIHoyIgTuuj8bDtQLHjuh-EHOcVfNrF0-Ym2aA=w1404-h1404-s-no-gm?authuser=0',
+    //Turtle
+    'https://lh3.googleusercontent.com/pw/AP1GczPBz2fzL_13dIaXFazqm7DGAJ2TzxAckPmXzO8lrYCivVzHC6t3f_YNQYZGSBbYw1qcLRYtYvUpgZ3NSjjMAXT-vodnfgVYgyVrk9SD4eM5aViLWKNWV-WfuquP7hvpP6sJ8IXzXRNTNzwVzhVotKFzeA=w1404-h1404-s-no-gm?authuser=0',
+    //Patagonia
+    'https://lh3.googleusercontent.com/pw/AP1GczMUQ1t48eMYUMd60Qqn6byXaiAPbb4MLDXr4mSMk1LIDIjV5-Ekvw6nojxvnIPrKh9Nro3-b2MqjqVuTCTvZeI04piRNNdkJUQZiVEFB21vuDJxNXkV_fYQbzjFon9JhReVB1RF9_gsscLfYuzmtBXaIg=w1054-h1404-s-no-gm?authuser=0'
+    // Add more of your image URLs here
+];
+
+const slideshowContainer = document.getElementById('slideshow-container');
+const dotsContainer = document.getElementById('dots-container');
+let slideIndex = 0;
+let slideInterval;
+
+// Create slide and dot elements dynamically
+imageUrls.forEach((url, index) => {
+    // Create slide
+    const slide = document.createElement('div');
+    slide.classList.add('slide');
+    slide.innerHTML = `<img src="${url}" alt="Slideshow image ${index + 1}">`;
+    slideshowContainer.insertBefore(slide, document.getElementById('prev-btn'));
+
+    // Create dot
+    const dot = document.createElement('span');
+    dot.classList.add('dot');
+    dot.setAttribute('onclick', `currentSlide(${index})`);
+    dotsContainer.appendChild(dot);
+});
+
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+
+function showSlide(n) {
+    slideIndex = (n + slides.length) % slides.length; // Loop around
+
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+
+    slides[slideIndex].classList.add('active');
+    dots[slideIndex].classList.add('active');
+}
+
+// Functions for next/prev and current slide
+function moveSlide(n) {
+    showSlide(slideIndex += n);
+    resetInterval();
+}
+
+function currentSlide(n) {
+    showSlide(n);
+    resetInterval();
+}
+
+// Automatic slideshow interval
+function startInterval() {
+    slideInterval = setInterval(() => {
+        moveSlide(1);
+    }, 3000); // Change image every 3 seconds
+}
+
+function resetInterval() {
+    clearInterval(slideInterval);
+    startInterval();
+}
+
+// Event listeners for arrows
+document.getElementById('prev-btn').addEventListener('click', () => moveSlide(-1));
+document.getElementById('next-btn').addEventListener('click', () => moveSlide(1));
+
+// Initial setup
+showSlide(0);
+startInterval();
     </script>
 </body>
 </html>
