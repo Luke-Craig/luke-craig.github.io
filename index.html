@@ -116,6 +116,23 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+
+        /* This is the new, more robust CSS for the accordion */
+        .accordion-item.active .accordion-content {
+            max-height: 5000px;
+            /* A large value that your content will not exceed */
+        }
+
+        .accordion-item.active .accordion-content-wrapper {
+            /* This adds the border only when the section is open */
+            border-top: 1px solid #e5e7eb;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -450,8 +467,8 @@
                                 </div>
                                 <i class="fas fa-plus text-gray-500 accordion-icon"></i>
                             </button>
-                            <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
-                                <div class="p-6 border-t border-gray-200">
+                            <div class="accordion-content"> <!-- The old animation classes are removed -->
+                                <div class="accordion-content-wrapper p-6">
                                     <p class="text-gray-700">I learn so much from reading. Reading is probably my favourite thing to do. When I get home from school, I sit in my comfortable arm chair or in the garden if it is nice and I read a good book. There was a time I would get through 52 books each year but I haven't done that for a while now which is a shame. <br><br>I intended to select some of my favourite books and add them here but it is too hard to choose. You can see what I have read on my <a href="https://www.goodreads.com/review/list/33842579-luke-craig?utf8=%E2%9C%93&order=d&sort=rating&view=reviews&title=luke-craig&per_page=infinite" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Goodreads review page</a> and sort by date or stars to see my faves (or the books I disliked). I always leave a star rating and I used to leave a one sentence review for each book but I gave that up as well...</p>
                                 </div>
                             </div>
@@ -466,80 +483,75 @@
                                 </div>
                                 <i class="fas fa-plus text-gray-500 accordion-icon"></i>
                             </button>
-                            <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
-                                <!-- New Coding Content Starts Here -->
-                                <div class="p-6 border-t border-gray-200 space-y-8">
-
-                                    <!-- Subheading 1: Learning the principles -->
-                                    <div>
-                                        <h3 class="text-2xl font-bold text-gray-800 mb-3">Learning the Principles</h3>
-                                        <p class="text-gray-700 mb-4">
-                                            My journey into coding began out of necessity when the English National Curriculum introduced programming principles like sequence, selection, and repetition. I started by using Scratch to create fun, engaging projects, which became a powerful tool for teaching these abstract concepts to students and for training other teachers on how to approach the new curriculum. Have a look at one of my games below. Can you unlock the secret prize?
-                                        </p>
-                                        <!-- Embedded Scratch Project -->
-                                        <div class="w-full max-w-lg mx-auto rounded-lg overflow-hidden shadow-lg">
-                                            <iframe src="https://scratch.mit.edu/projects/1143252206/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>
-                                        </div>
-                                    </div>
-
-                                    <!-- Subheading 2: Using Apps Script -->
-                                    <div>
-                                        <h3 class="text-2xl font-bold text-gray-800 mb-3">Applying Skills with Apps Script</h3>
-                                        <p class="text-gray-700 mb-4">
-                                            After getting comfortable with the logic of programming, I took a free online course, <a href="https://courses.benlcollins.com/p/apps-script-blastoff" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Apps Script Blastoff</a> by Ben Collins. This opened my eyes to the power of automation within Google Workspace, and I quickly began creating useful projects and tools to solve real-world problems at my school.
-                                        </p>
-                                        <!-- Embedded YouTube Video -->
-                                        <div class="w-full mx-auto rounded-lg overflow-hidden shadow-lg" style="aspect-ratio: 16 / 9;">
-                                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/9UddsztXinU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                        </div>
-                                    </div>
-
-                                    <!-- Subheading 3: Sharing My Projects -->
-                                    <div>
-                                        <h3 class="text-2xl font-bold text-gray-800 mb-3">Sharing My Projects</h3>
-                                        <p class="text-gray-700 mb-4">
-                                            As I developed more tools, I collaborated with a friend to create <a href="https://www.eduscripts.uk/about" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">EduScripts.uk</a>, a website to share our creations with a wider audience of educators. This pushed me to learn how to publish official add-ons to the Google Workspace Marketplace, which have now been installed by educators all over the world.
-                                        </p>
-                                        <!-- Add-on Showcase with Icons -->
-                                        <div class="grid md:grid-cols-3 gap-4 text-center">
-                                            <!-- Comment Bank Add-on -->
-                                            <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center">
-                                                <img src="https://lh3.googleusercontent.com/-GDyPLBNzIl8/YORukbzFlGI/AAAAAAAAAOo/GRGfABWQ0b8mbvLo424BSfjSGyVkmQSPwCLcBGAsYHQ/Comment%2BBank%2BLogo%2B32.png" alt="Comment Bank Icon" class="w-16 h-16 rounded-full mb-3 shadow-md">
-                                                <p class="font-bold text-lg text-gray-800">Comment Bank</p>
-                                                <p class="text-2xl font-light text-blue-600">97k+</p>
-                                                <p class="text-sm text-gray-500 mb-2">Installs</p>
-                                                <a href="https://workspace.google.com/marketplace/app/comment_bank/1066703348647" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-600 hover:underline mt-auto">View Add-on &rarr;</a>
-                                            </div>
-                                            <!-- Online Register Add-on -->
-                                            <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center">
-                                                <img src="https://lh3.googleusercontent.com/-9WKdYIT2hoU/YDpToWAzT8I/AAAAAAAAABA/OuALLx85UgER97_XbTraiEeYg_If5vn2gCLcBGAsYHQ/128x128%2BOnline%2BRegister%2BLogo%2B%2Bbigger.png" alt="Online Register Icon" class="w-16 h-16 rounded-full mb-3 shadow-md">
-                                                <p class="font-bold text-lg text-gray-800">Online Register</p>
-                                                <p class="text-2xl font-light text-blue-600">150k+</p>
-                                                <p class="text-sm text-gray-500 mb-2">Installs</p>
-                                                <a href="https://workspace.google.com/marketplace/app/online_register_for_google_classroom/814234374907" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-600 hover:underline mt-auto">View Add-on &rarr;</a>
-                                            </div>
-                                            <!-- Sheet to Meet Add-on -->
-                                            <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center">
-                                                <img src="https://lh3.googleusercontent.com/-ud0F0OzIsfI/YH18yA_ubiI/AAAAAAAAAKY/RLwKhOnURn0abf1QlhwtGFvfTdJGgSYQgCLcBGAsYHQ/New%2BSheet%2Bto%2BMeet.png" alt="Sheet to Meet Icon" class="w-16 h-16 rounded-full mb-3 shadow-md">
-                                                <p class="font-bold text-lg text-gray-800">Sheet to Meet</p>
-                                                <p class="text-2xl font-light text-blue-600">50k+</p>
-                                                <p class="text-sm text-gray-500 mb-2">Installs</p>
-                                                <a href="https://workspace.google.com/marketplace/app/sheet_to_meet/250163384083" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-600 hover:underline mt-auto">View Add-on &rarr;</a>
+                            <div class="accordion-content">
+                                <div class="accordion-content-wrapper px-6 pt-4 pb-6">
+                                    <!-- This new div wraps all the content and ensures padding is respected -->
+                                    <div class="space-y-8">
+                                        <!-- Subheading 1: Learning the principles -->
+                                        <div>
+                                            <h3 class="text-2xl font-bold text-gray-800 mb-3">Learning the Principles</h3>
+                                            <p class="text-gray-700 mb-4">
+                                                My journey into coding began out of necessity when the English National Curriculum introduced programming principles like sequence, selection, and repetition. I started by using Scratch to create fun, engaging projects, which became a powerful tool for teaching these abstract concepts to students and for training other teachers on how to approach the new curriculum. Have a look at one of my games below and click the green flag to play. Can you unlock the secret prize by clicking the cat enough?
+                                            </p>
+                                            <div class="w-full max-w-lg mx-auto rounded-lg overflow-hidden shadow-lg">
+                                                <iframe src="https://scratch.mit.edu/projects/1143252206/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <!-- Subheading 4: Advanced Learning -->
-                                    <div>
-                                        <h3 class="text-2xl font-bold text-gray-800 mb-3">Advanced Learning</h3>
-                                        <p class="text-gray-700">
-                                            To deepen my understanding of computer science, I am currently about halfway through <a href="https://cs50.harvard.edu/x/2025/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Harvard's famous CS50 course</a>. This is challenging me to learn more complex data structures, algorithms, and lower-level programming concepts.
-                                        </p>
+                                        <!-- Subheading 2: Using Apps Script -->
+                                        <div>
+                                            <h3 class="text-2xl font-bold text-gray-800 mb-3">Applying Skills with Apps Script</h3>
+                                            <p class="text-gray-700 mb-4">
+                                                After getting comfortable with the logic of programming, I took a free online course, <a href="https://courses.benlcollins.com/p/apps-script-blastoff" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Apps Script Blastoff</a> by Ben Collins. This opened my eyes to the power of automation within Google Workspace, and I quickly began creating useful projects and tools to solve real-world problems at my school.
+                                            </p>
+                                            <div class="w-full mx-auto rounded-lg overflow-hidden shadow-lg" style="aspect-ratio: 16 / 9;">
+                                                <iframe class="w-full h-full" src="https://www.youtube.com/embed/9UddsztXinU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                            </div>
+                                        </div>
+
+                                        <!-- Subheading 3: Sharing My Projects -->
+                                        <div>
+                                            <h3 class="text-2xl font-bold text-gray-800 mb-3">Sharing My Projects</h3>
+                                            <p class="text-gray-700 mb-4">
+                                                As I developed more tools, I collaborated with a friend to create <a href="https://www.eduscripts.uk/about" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">EduScripts.uk</a>, a website to share our creations with a wider audience of educators. This pushed me to learn how to publish official add-ons to the Google Workspace Marketplace, which have now been installed by educators all over the world.
+                                            </p>
+                                            <div class="grid md:grid-cols-3 gap-4 text-center">
+                                                <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center">
+                                                    <img src="https://lh3.googleusercontent.com/-GDyPLBNzIl8/YORukbzFlGI/AAAAAAAAAOo/GRGfABWQ0b8mbvLo424BSfjSGyVkmQSPwCLcBGAsYHQ/Comment%2BBank%2BLogo%2B32.png" alt="Comment Bank Icon" class="w-14 h-14 rounded-lg mb-3 shadow-md">
+                                                    <p class="font-bold text-lg text-gray-800">Comment Bank</p>
+                                                    <p class="text-2xl font-light text-blue-600">97k+</p>
+                                                    <p class="text-sm text-gray-500 mb-2">Installs</p>
+                                                    <a href="https://workspace.google.com/marketplace/app/comment_bank/1066703348647" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-600 hover:underline mt-auto">View Add-on &rarr;</a>
+                                                </div>
+                                                <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center">
+                                                    <img src="https://lh3.googleusercontent.com/-9WKdYIT2hoU/YDpToWAzT8I/AAAAAAAAABA/OuALLx85UgER97_XbTraiEeYg_If5vn2gCLcBGAsYHQ/128x128%2BOnline%2BRegister%2BLogo%2B%2Bbigger.png" alt="Online Register Icon" class="w-14 h-14 rounded-lg mb-3 shadow-md">
+                                                    <p class="font-bold text-lg text-gray-800">Online Register</p>
+                                                    <p class="text-2xl font-light text-blue-600">150k+</p>
+                                                    <p class="text-sm text-gray-500 mb-2">Installs</p>
+                                                    <a href="https://workspace.google.com/marketplace/app/online_register_for_google_classroom/814234374907" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-600 hover:underline mt-auto">View Add-on &rarr;</a>
+                                                </div>
+                                                <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center">
+                                                    <img src="https://lh3.googleusercontent.com/-ud0F0OzIsfI/YH18yA_ubiI/AAAAAAAAAKY/RLwKhOnURn0abf1QlhwtGFvfTdJGgSYQgCLcBGAsYHQ/New%2BSheet%2Bto%2BMeet.png" alt="Sheet to Meet Icon" class="w-14 h-14 rounded-lg mb-3 shadow-md">
+                                                    <p class="font-bold text-lg text-gray-800">Sheet to Meet</p>
+                                                    <p class="text-2xl font-light text-blue-600">50k+</p>
+                                                    <p class="text-sm text-gray-500 mb-2">Installs</p>
+                                                    <a href="https://workspace.google.com/marketplace/app/sheet_to_meet/250163384083" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-600 hover:underline mt-auto">View Add-on &rarr;</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Subheading 4: Advanced Learning -->
+                                        <div>
+                                            <h3 class="text-2xl font-bold text-gray-800 mb-3">Advanced Learning</h3>
+                                            <p class="text-gray-700">
+                                                To deepen my understanding of computer science, I am currently about halfway through <a href="https://cs50.harvard.edu/x/2025/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Harvard's famous CS50 course</a>. This is challenging me to learn more complex data structures, algorithms, and lower-level programming concepts.
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                                <!-- New Coding Content Ends Here -->
                             </div>
                         </div>
+
 
                         <!-- Other accordion items with their new IDs -->
                         <div id="drumming-section" class="accordion-item bg-white rounded-xl shadow-md overflow-hidden">
@@ -550,57 +562,57 @@
                                 </div>
                                 <i class="fas fa-plus text-gray-500 accordion-icon"></i>
                             </button>
-                            <!-- New Drumming Content Starts Here -->
-<div class="p-6 border-t border-gray-200 space-y-8">
+                            <div class="accordion-content">
+                                <div class="accordion-content-wrapper p-6">
+                                    <!-- This new div wraps all the content and ensures padding is respected -->
+                                    <div class="space-y-8">
+                                        <!-- Intro and Image -->
+                                        <div class="flex flex-col md:flex-row gap-6 items-start">
+                                            <div class="md:w-2/3">
+                                                <p class="text-gray-700 mb-4">
+                                                    I started learning the drums when I was a teenager playing in church, and I took Music Tech at Sixth Form. I joined a band with old school mates and we played a few gigs in pubs and empty school halls. Then one day we got invited to Sweden to record a few songs for some student audio engineers.
+                                                </p>
+                                                <p class="text-gray-700 mb-4">
+                                                    I continue to play the drums weekly in church and I give drumming lessons to kids kicked out of school through <a href="https://www.communityalbums.com/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Community Albums</a>. When I got older I joined a more serious band and we played some gigs at pubs and weddings that we actually got paid for! I also play drums with my brother in law Seyi and we went to a recording studio for his birthday.
+                                                </p>
+                                                <p class="text-gray-700">
+                                                    Some of these songs are below and I am still waiting to make the big time one of these days...
+                                                </p>
+                                            </div>
+                                            <div class="md:w-1/3 w-full">
+                                                <img src="https://lh3.googleusercontent.com/pw/AP1GczPQxNOhW2DjuYxoUInWi3HWt2OkeiS12Z-EVoDB3TWppp82PyXJX6HmxnwNcFRC8DGMP5ZCEfbbvvcJ2JO_U6atVrwLwtcZ3j9cZyicE9SbLtYupug7Na5URpbB0rxB0rTorRlxkjqCPzbKZ-QC1p2WMQ=w1872-h1404-s-no-gm?authuser=0" alt="A photo of a drum kit" class="rounded-lg shadow-lg w-full" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Drum+Kit';">
+                                            </div>
+                                        </div>
 
-    <!-- Intro and Image -->
-    <div class="flex flex-col md:flex-row gap-6 items-start">
-        <div class="md:w-2/3">
-            <p class="text-gray-700 mb-4">
-                I started learning the drums when I was a teenager playing in church, and I took Music Tech at Sixth Form. I joined a band with old school mates and we played a few gigs in pubs and empty school halls. Then one day we got invited to Sweden to record a few songs for some student audio engineers.
-            </p>
-             <p class="text-gray-700 mb-4">
-                I continue to play the drums weekly in church and I give drumming lessons to kids kicked out of school through <a href="https://www.communityalbums.com/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Community Albums</a>. When I got older I joined a more serious band and we played some gigs at pubs and weddings that we actually got paid for. I also play drums with my brother in law Seyi and we went to a recording studio for his birthday.
-            </p>
-            <p class="text-gray-700">
-                Some of these songs are below and I am still waiting to make the big time one of these days...
-            </p>
-        </div>
-        <div class="md:w-1/3 w-full">
-            <!-- !! REMEMBER TO REPLACE THIS WITH YOUR PUBLIC IMAGE URL FROM ImgBB or a similar service !! -->
-            <img src="https://lh3.googleusercontent.com/pw/AP1GczPQxNOhW2DjuYxoUInWi3HWt2OkeiS12Z-EVoDB3TWppp82PyXJX6HmxnwNcFRC8DGMP5ZCEfbbvvcJ2JO_U6atVrwLwtcZ3j9cZyicE9SbLtYupug7Na5URpbB0rxB0rTorRlxkjqCPzbKZ-QC1p2WMQ=w1872-h1404-s-no-gm?authuser=0" alt="A photo of a drum kit" class="rounded-lg shadow-lg w-full" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Drum+Kit';">
-        </div>
-    </div>
+                                        <!-- Section 1: High Voltage -->
+                                        <div>
+                                            <h3 class="text-2xl font-bold text-gray-800 mb-4">High Voltage ⚡️ Rock and Roll</h3>
+                                            <div class="space-y-4">
+                                                <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2121664773&amp;color=%2300aabb&amp;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=false"></iframe>
+                                                <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2121664776&amp;color=%2300aabb&amp;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=false"></iframe>
+                                            </div>
+                                        </div>
 
-    <!-- Section 1: High Voltage -->
-    <div>
-        <h3 class="text-2xl font-bold text-gray-800 mb-4">High Voltage ⚡️ Rock and Roll</h3>
-        <div class="space-y-4">
-            <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2121664773&amp;color=%2300aabb&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true"></iframe>
-            <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2121664776&amp;color=%2300aabb&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true"></iframe>
-        </div>
-    </div>
+                                        <!-- Section 2: Seyi's Birthday -->
+                                        <div>
+                                            <h3 class="text-2xl font-bold text-gray-800 mb-4">Seyi's Birthday at the Recording Studio</h3>
+                                            <div class="space-y-4">
+                                                <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2121665937&amp;color=%2300aabb&amp;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=false"></iframe>
+                                                <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2121665931&amp;color=%2300aabb&amp;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=false"></iframe>
+                                            </div>
+                                        </div>
 
-    <!-- Section 2: Seyi's Birthday -->
-    <div>
-        <h3 class="text-2xl font-bold text-gray-800 mb-4">Seyi's Birthday at the Recording Studio</h3>
-        <div class="space-y-4">
-             <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2121665937&amp;color=%2300aabb&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true"></iframe>
-             <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2121665931&amp;color=%2300aabb&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true"></iframe>
-        </div>
-    </div>
-    
-    <!-- Section 3: Missing Pieces -->
-    <div>
-        <h3 class="text-2xl font-bold text-gray-800 mb-4">Missing Pieces - A More Serious Band</h3>
-        <div class="space-y-4">
-             <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2121665262&amp;color=%2300aabb&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true"></iframe>
-             <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2121665256&amp;color=%2300aabb&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true"></iframe>
-        </div>
-    </div>
-
-</div>
-<!-- New Drumming Content Ends Here -->
+                                        <!-- Section 3: Missing Pieces -->
+                                        <div>
+                                            <h3 class="text-2xl font-bold text-gray-800 mb-4">Missing Pieces - A More Serious Band</h3>
+                                            <div class="space-y-4">
+                                                <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2121665262&amp;color=%2300aabb&amp;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=false"></iframe>
+                                                <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2121665256&amp;color=%2300aabb&amp;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=false"></iframe>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div id="academic-section" class="accordion-item bg-white rounded-xl shadow-md overflow-hidden">
@@ -611,8 +623,8 @@
                                 </div>
                                 <i class="fas fa-plus text-gray-500 accordion-icon"></i>
                             </button>
-                            <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
-                                <div class="p-6 border-t border-gray-200">
+                            <div class="accordion-content"> <!-- The old animation classes are removed -->
+                                <div class="accordion-content-wrapper p-6">
                                     <p class="text-gray-700">Your academic content will go here.</p>
                                 </div>
                             </div>
@@ -626,8 +638,8 @@
                                 </div>
                                 <i class="fas fa-plus text-gray-500 accordion-icon"></i>
                             </button>
-                            <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
-                                <div class="p-6 border-t border-gray-200">
+                            <div class="accordion-content"> <!-- The old animation classes are removed -->
+                                <div class="accordion-content-wrapper p-6">
                                     <p class="text-gray-700">Your content about running will go here.</p>
                                 </div>
                             </div>
@@ -641,8 +653,8 @@
                                 </div>
                                 <i class="fas fa-plus text-gray-500 accordion-icon"></i>
                             </button>
-                            <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
-                                <div class="p-6 border-t border-gray-200">
+                            <div class="accordion-content"> <!-- The old animation classes are removed -->
+                                <div class="accordion-content-wrapper p-6">
                                     <p class="text-gray-700">Your content about Sudokus will go here.</p>
                                 </div>
                             </div>
@@ -923,57 +935,48 @@
         // Initial setup
         showSlide(0);
         startInterval();
-        // --- ACCORDION & EMOJI NAVIGATION LOGIC ---
-        const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+        // --- ACCORDION & EMOJI NAVIGATION LOGIC (Robust Version) ---
+        const accordionItems = document.querySelectorAll('.accordion-item');
         const emojiContainers = document.querySelectorAll('.emoji-container');
 
-        // Function to open a specific accordion item
-        function openAccordion(header) {
-            if (!header.classList.contains('active')) {
-                header.click();
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            if (header) {
+                header.addEventListener('click', () => {
+                    const icon = header.querySelector('.accordion-icon');
+                    // Toggle the 'active' class on the main item div
+                    item.classList.toggle('active');
+
+                    // Update the plus/minus icon
+                    if (item.classList.contains('active')) {
+                        icon.classList.replace('fa-plus', 'fa-minus');
+                    } else {
+                        icon.classList.replace('fa-minus', 'fa-plus');
+                    }
+                });
             }
-        }
-
-        // Attach click listener to each accordion header
-        accordionHeaders.forEach(header => {
-            header.addEventListener('click', () => {
-                const accordionContent = header.nextElementSibling;
-                const accordionIcon = header.querySelector('.accordion-icon');
-
-                // Toggle active class for styling
-                header.classList.toggle('active');
-
-                if (header.classList.contains('active')) {
-                    // Open the accordion
-                    accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
-                    accordionIcon.classList.remove('fa-plus');
-                    accordionIcon.classList.add('fa-minus');
-                } else {
-                    // Close the accordion
-                    accordionContent.style.maxHeight = '0px';
-                    accordionIcon.classList.remove('fa-minus');
-                    accordionIcon.classList.add('fa-plus');
-                }
-            });
         });
 
-        // Attach click listener to each emoji container
         emojiContainers.forEach(container => {
             container.addEventListener('click', function() {
                 const targetId = this.dataset.target;
                 const targetSection = document.getElementById(targetId);
 
                 if (targetSection) {
-                    const targetHeader = targetSection.querySelector('.accordion-header');
+                    // Force the section to open if it's not already active
+                    if (!targetSection.classList.contains('active')) {
+                        const header = targetSection.querySelector('.accordion-header');
+                        if (header) header.click(); // Simulate a click to open it
+                    }
 
-                    // Open the corresponding accordion section
-                    openAccordion(targetHeader);
-
-                    // Smoothly scroll to the section
-                    targetSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    // Scroll to the section after a short delay
+                    setTimeout(() => {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }, 100);
                 }
             });
         });
