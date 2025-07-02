@@ -200,7 +200,7 @@
 
                         <p class="text-gray-700 mb-4">This website is a portfolio of things I have done in my life which I am proud of. I created the website using HTML, CSS and JavaScript (with a little help from AI.) Below are some examples of my adventures over the years...</p>
 
-                       
+
                     </div>
                     <!-- Slideshow Container -->
                     <div class="max-w-4xl mx-auto my-8">
@@ -218,7 +218,7 @@
                         </div>
                     </div>
 
-                   
+
                 </div>
             </div>
 
@@ -393,7 +393,7 @@
                     </div>
                     <!-- Emoji Banner -->
                     <div class="flex justify-center items-start space-x-4 md:space-x-8 p-6 bg-white rounded-xl shadow-md mb-12">
-                        
+
                         <!-- Coding Emoji -->
                         <div class="emoji-container relative text-center cursor-pointer" data-target="coding-section">
                             <span class="text-5xl md:text-7xl inline-block transform transition-transform duration-200 hover:scale-125">👾</span>
@@ -428,7 +428,7 @@
 
                     <!-- Accordion Container -->
                     <div class="space-y-4">
-                        
+
 
                         <!-- Coding Section -->
                         <div id="coding-section" class="accordion-item bg-white rounded-xl shadow-md overflow-hidden">
@@ -529,7 +529,7 @@
                                                     I started learning the drums when I was a teenager playing in church, and I took Music Tech at Sixth Form. I joined a band with old school mates and we played a few gigs in pubs and empty school halls. Then one day we got invited to Sweden to record a few songs for some student audio engineers.
                                                 </p>
                                                 <p class="text-gray-700 mb-4">
-                                                    I continue to play the drums weekly in church and I give drumming lessons to kids kicked out of school through <a href="https://www.communityalbums.com/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Community Albums</a>. When I got older I joined a more serious band and we played some gigs at pubs and weddings that we actually got paid for! I also play drums with my brother in law Seyi and we went to a recording studio for his birthday.
+                                                    I continue to play the drums weekly in church and I give drumming lessons to kids kicked out of school through <a href="https://www.communityalbums.com/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Community Albums</a>. When I got older I joined a more serious band and we played some gigs at pubs and weddings that we actually got paid for. I also play drums with my brother in law Seyi and we went to a recording studio for his birthday.
                                                 </p>
                                                 <p class="text-gray-700">
                                                     Some of these songs are below and I am still waiting to make the big time one of these days...
@@ -627,7 +627,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Reading Section -->
                         <div id="reading-section" class="accordion-item bg-white rounded-xl shadow-md overflow-hidden">
                             <button class="accordion-header w-full flex justify-between items-center text-left p-6 font-bold text-xl text-gray-800 hover:bg-gray-50 transition duration-300">
@@ -686,10 +686,41 @@
 
             <!-- Future Page -->
             <div id="future" class="page fade-in">
-                <div class="max-w-4xl mx-auto">
-                    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Future Initiatives</h1>
+                <div class="max-w-4xl mx-auto text-center">
+
+                    <!-- Introduction -->
+                    <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Future Goals</h1>
+                        <p class="text-gray-600">
+                            There are lots of things I still want to do, learn, and create. Click the spinner below to find out about them. I hope lots of these will one day make it to one of my other tabs.
+                        </p>
+                    </div>
+
+                    <!-- Goal Display Area -->
+                    <div class="bg-white rounded-xl shadow-md p-6 mb-8 min-h-[120px] flex items-center justify-center">
+                        <p id="goal-display" class="text-lg text-gray-700 transition-opacity duration-300">
+                            One of my more exciting ideas is that one day I want all students to have the chance to create some kind of portfolio of the things they are proud of, a little bit like this site. Something they could use in interviews, but also something which will make them see all the amazing stuff they have done all in one place.
+                        </p>
+                    </div>
+
+                    <!-- Spinner Container -->
+                    <div class="relative inline-flex flex-col items-center justify-center">
+                        <!-- Pointer at the top -->
+                        <div class="absolute -top-2 z-20 w-0 h-0 border-x-8 border-x-transparent border-t-[16px] border-t-gray-700"></div>
+
+                        <!-- Spinner Canvas -->
+                        <div class="relative w-80 h-80 md:w-96 md:h-96">
+                            <canvas id="spinner-canvas"></canvas>
+                        </div>
+
+                        <!-- Spin Button -->
+                        <button id="spin-button" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-white rounded-full font-bold text-xl text-blue-600 shadow-lg border-4 border-blue-200 hover:bg-blue-50 transition duration-300 transform hover:scale-110">
+                            Spin!
+                        </button>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -797,13 +828,22 @@
 
                 const targetPage = this.getAttribute("data-page");
 
+                // Update active nav link
                 navLinks.forEach(link => link.classList.remove("active"));
                 this.classList.add("active");
 
+                // Show target page
                 pages.forEach(page => {
                     page.classList.remove("active");
                     if (page.id === targetPage) {
                         page.classList.add("active");
+
+                        // --- THIS IS THE NEW PART ---
+                        // If the target is the future page, initialize the spinner
+                        if (targetPage === 'future') {
+                            initializeSpinner();
+                        }
+                        // --- END OF NEW PART ---
                     }
                 });
             });
@@ -994,6 +1034,168 @@
                 }
             });
         });
+
+        // --- SPINNER LOGIC (v4 - Animation Fixed) ---
+        let spinnerInitialized = false;
+
+        function initializeSpinner() {
+            if (spinnerInitialized) return;
+
+            const goals = [{
+                    text: "Portfolio Project",
+                    description: "One of my more exciting ideas is that one day I want all students to have the chance to create some kind of portfolio of the things they are proud of, a little bit like this site - something they could use in interviews but also something which will make them see all the amazing stuff they have done all in one place."
+                },
+                {
+                    text: "Mountain Leader",
+                    description: "Complete the Mountain Leader course to be able to safely lead groups in the mountains."
+                },
+                {
+                    text: "Mountain Rounds",
+                    description: "Complete the other two classic UK mountain rounds: the Paddy Buckley Round in Wales and the Ramsey Round in Scotland."
+                },
+                {
+                    text: "Work with PRUs",
+                    description: "Work with Pupil Referral Units like Eko, using my skills to support students who have been excluded from mainstream education."
+                },
+                {
+                    text: "Get a Motorbike",
+                    description: "I used to have a motorbike. Now I want a big boy one! Maybe a Triumph Speed Triple..."
+                },
+                {
+                    text: "Complete CS50",
+                    description: "Finish Harvard's CS50 course and then complete the AI version to deepen my computer science knowledge."
+                },
+                {
+                    text: "London Marathon",
+                    description: "Train hard and qualify for the London Marathon with a 'Good for Age' time. (Currently 2:52)"
+                },
+                {
+                    text: "Kona Triathlon",
+                    description: "Take my triathlon training to the next level and qualify for the Ironman World Championship in Kona as an age-grouper."
+                },
+                {
+                    text: "Write a Story",
+                    description: "Dedicate time to creative writing and complete a story that I am truly proud of."
+                },
+                {
+                    text: "Serious Chess",
+                    description: "Get serious about chess, study openings and tactics, and aim for a 1500 rating."
+                },
+                {
+                    text: "Learn Piano",
+                    description: "Learn to play the piano to a good standard."
+                },
+                {
+                    text: "Learn French",
+                    description: "Become proficient enough in French to be able to read a novel from start to finish."
+                },
+                {
+                    text: "Kungsleden Trail",
+                    description: "Plan and complete a solo wild-camping trip along the famous Kungsleden (King's Trail) in Sweden."
+                }
+            ];
+
+            const colors = ["#4f46e5", "#ec4899", "#22c55e", "#f97316", "#3b82f6", "#8b5cf6", "#10b981", "#eab308", "#6366f1", "#d946ef", "#06b6d4", "#f59e0b", "#ef4444"];
+            const canvas = document.getElementById('spinner-canvas');
+            const spinButton = document.getElementById('spin-button');
+            const goalDisplay = document.getElementById('goal-display');
+
+            if (!canvas || !spinButton || !goalDisplay) return;
+
+            const ctx = canvas.getContext('2d');
+            const numSegments = goals.length;
+            const arcSize = (2 * Math.PI) / numSegments;
+            const size = canvas.parentElement.clientWidth;
+            canvas.width = size;
+            canvas.height = size;
+            const radius = size / 2;
+
+            let currentRotation = 0;
+            let isSpinning = false;
+            let lastWinningIndex = 0;
+
+            const pointerAngle = 1.5 * Math.PI;
+            const firstSegmentCenter = arcSize / 2;
+            currentRotation = pointerAngle - firstSegmentCenter;
+
+            function drawSpinner(rotationAngle) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(rotationAngle);
+                for (let i = 0; i < numSegments; i++) {
+                    const angle = arcSize * i;
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.arc(0, 0, radius - 5, angle, angle + arcSize);
+                    ctx.closePath();
+                    ctx.fillStyle = colors[i % colors.length];
+                    ctx.fill();
+                    ctx.strokeStyle = "#fff";
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+                    ctx.save();
+                    ctx.rotate(angle + arcSize / 2);
+                    ctx.textAlign = "right";
+                    ctx.fillStyle = "#fff";
+                    ctx.font = "bold 14px Poppins";
+                    ctx.textBaseline = "middle";
+                    ctx.fillText(goals[i].text, radius - 15, 0);
+                    ctx.restore();
+                }
+                ctx.restore();
+            }
+
+            function spin() {
+                if (isSpinning) return;
+                isSpinning = true;
+                spinButton.disabled = true;
+
+                let winningSegment;
+                do {
+                    winningSegment = Math.floor(Math.random() * numSegments);
+                } while (winningSegment === lastWinningIndex);
+                lastWinningIndex = winningSegment;
+
+                const startRotation = currentRotation;
+                const spinRevolutions = 3 * Math.PI * 2;
+                const targetAngle = startRotation + spinRevolutions - (startRotation % (2 * Math.PI)) + (2 * Math.PI - (winningSegment * arcSize + arcSize / 2) + pointerAngle);
+
+                let startTimestamp = null;
+
+                function animate(timestamp) {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = timestamp - startTimestamp;
+                    const duration = 1500; // 2 seconds
+
+                    const easeOut = 1 - Math.pow(1 - Math.min(progress / duration, 1), 4);
+                    const rotation = startRotation + easeOut * (targetAngle - startRotation);
+
+                    drawSpinner(rotation);
+
+                    if (progress < duration) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        currentRotation = targetAngle;
+                        drawSpinner(currentRotation);
+
+                        goalDisplay.style.opacity = 0;
+                        setTimeout(() => {
+                            goalDisplay.textContent = goals[winningSegment].description;
+                            goalDisplay.style.opacity = 1;
+                        }, 300);
+
+                        isSpinning = false;
+                        spinButton.disabled = false;
+                    }
+                }
+                requestAnimationFrame(animate);
+            }
+
+            spinButton.addEventListener('click', spin);
+            drawSpinner(currentRotation);
+            spinnerInitialized = true;
+        }
     </script>
 </body>
 
