@@ -1035,7 +1035,9 @@
             });
         });
 
-        // --- SPINNER LOGIC (v4 - Animation Fixed) ---
+
+
+        // --- SPINNER LOGIC (v6 - True No-Repeat Cycle) ---
         let spinnerInitialized = false;
 
         function initializeSpinner() {
@@ -1043,7 +1045,7 @@
 
             const goals = [{
                     text: "Portfolio Project",
-                    description: "One of my more exciting ideas is that one day I want all students to have the chance to create some kind of portfolio of the things they are proud of, a little bit like this site - something they could use in interviews but also something which will make them see all the amazing stuff they have done all in one place."
+                    description: "One of my more exciting ideas is that one day I want all students to have the chance to create some kind of portfolio of the things they are proud of a little bit like this site - something they could use in interviews but also something which will make them see all the amazing stuff they have done all in one place."
                 },
                 {
                     text: "Mountain Leader",
@@ -1059,7 +1061,7 @@
                 },
                 {
                     text: "Get a Motorbike",
-                    description: "I used to have a motorbike. Now I want a big boy one! Maybe a Triumph Speed Triple..."
+                    description: "I used to have a motorbike. Now I want a big boy one. Maybe a Triumph Speed Triple..."
                 },
                 {
                     text: "Complete CS50",
@@ -1067,7 +1069,7 @@
                 },
                 {
                     text: "London Marathon",
-                    description: "Train hard and qualify for the London Marathon with a 'Good for Age' time. (Currently 2:52)"
+                    description: "Train hard and qualify for the London Marathon with a 'Good for Age' time (currently 2:52)."
                 },
                 {
                     text: "Kona Triathlon",
@@ -1075,7 +1077,7 @@
                 },
                 {
                     text: "Write a Story",
-                    description: "Dedicate time to creative writing and complete a story that I am truly proud of."
+                    description: "Dedicate time to creative writing and complete a story that I am proud of."
                 },
                 {
                     text: "Serious Chess",
@@ -1112,7 +1114,10 @@
 
             let currentRotation = 0;
             let isSpinning = false;
-            let lastWinningIndex = 0;
+
+            // --- NEW LOGIC: Create a list of available goals ---
+            let availableGoals = [...goals];
+            let lastGoal = null;
 
             const pointerAngle = 1.5 * Math.PI;
             const firstSegmentCenter = arcSize / 2;
@@ -1151,11 +1156,19 @@
                 isSpinning = true;
                 spinButton.disabled = true;
 
-                let winningSegment;
-                do {
-                    winningSegment = Math.floor(Math.random() * numSegments);
-                } while (winningSegment === lastWinningIndex);
-                lastWinningIndex = winningSegment;
+                // --- NEW LOGIC: Pick from the available list ---
+                // If the list is empty, reset it
+                if (availableGoals.length === 0) {
+                    availableGoals = [...goals];
+                }
+
+                // Pick a random index from the available list
+                const availableIndex = Math.floor(Math.random() * availableGoals.length);
+                // Get the goal and remove it from the available list
+                const winningGoal = availableGoals.splice(availableIndex, 1)[0];
+
+                // Find the original index of the winner to position the spinner
+                const winningSegment = goals.findIndex(g => g.text === winningGoal.text);
 
                 const startRotation = currentRotation;
                 const spinRevolutions = 3 * Math.PI * 2;
@@ -1166,7 +1179,7 @@
                 function animate(timestamp) {
                     if (!startTimestamp) startTimestamp = timestamp;
                     const progress = timestamp - startTimestamp;
-                    const duration = 1500; // 2 seconds
+                    const duration = 2000;
 
                     const easeOut = 1 - Math.pow(1 - Math.min(progress / duration, 1), 4);
                     const rotation = startRotation + easeOut * (targetAngle - startRotation);
@@ -1181,7 +1194,7 @@
 
                         goalDisplay.style.opacity = 0;
                         setTimeout(() => {
-                            goalDisplay.textContent = goals[winningSegment].description;
+                            goalDisplay.textContent = winningGoal.description;
                             goalDisplay.style.opacity = 1;
                         }, 300);
 
