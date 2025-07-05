@@ -135,6 +135,49 @@
             /* This adds the border only when the section is open */
             border-top: 1px solid #e5e7eb;
         }
+
+        /* --- CSS for Image Magnifier --- */
+        .magnify-container {
+            position: relative;
+            /* This is essential for positioning the lens */
+            cursor: none;
+            /* We'll hide the default cursor */
+        }
+
+        .magnify-lens {
+            position: absolute;
+            /* This creates the magnifying glass circle */
+            border: 3px solid #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+            border-radius: 50%;
+            width: 275px;
+            /* The size of the magnifying glass */
+            height: 275px;
+
+            /* Hide the lens by default */
+            display: none;
+            pointer-events: none;
+            /* Make sure the lens doesn't block mouse events */
+
+            /* The background image will be set by JavaScript */
+            background-repeat: no-repeat;
+        }
+
+        /* Custom cursor to look like a magnifying glass */
+        .magnify-container::after {
+            content: '🔍';
+            font-size: 2rem;
+            /* Size of the emoji cursor */
+            position: absolute;
+            pointer-events: none;
+            display: none;
+            /* Hidden by default */
+        }
+
+        .magnify-container a {
+            cursor: none;
+            /* This hides the hand cursor on the link as well */
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -605,13 +648,19 @@
                                                 In 2022, I enrolled on a Professional Doctorate with UEL. My research is focused on how best to enhance student creativity, and I intend to do action research over the course of 12 weeks by running an after-school "Creativity Playground" club. For more information about the club, take a look at the posters below.
                                             </p>
                                             <div class="grid md:grid-cols-2 gap-6">
-                                                <div>
-                                                    <!-- !! REPLACE THIS SRC WITH YOUR PUBLIC IMAGE URL FOR THE FIRST POSTER !! -->
-                                                    <img src="https://lh3.googleusercontent.com/pw/AP1GczMFg9hx6oHv2olIx4K-kx_tpFX9owoBx4bcFdgaLxmELkhzf9IGcYI-tEvvZL1-tQELgXqukcJIXzO7HRXho_dTxZOoD1g9HYqDGCgevygTxq-dPTMWVFmE-u_gexVUc1XkW5WIhViqPUVllNCoQ-2xGQ=w992-h1404-s-no-gm?authuser=0" alt="Creativity Playground Poster 1" class="rounded-lg shadow-md w-full">
+                                                <!-- Poster 1 with Magnifier Container -->
+                                                <div class="magnify-container">
+                                                    <a href="https://lh3.googleusercontent.com/pw/AP1GczMFg9hx6oHv2olIx4K-kx_tpFX9owoBx4bcFdgaLxmELkhzf9IGcYI-tEvvZL1-tQELgXqukcJIXzO7HRXho_dTxZOoD1g9HYqDGCgevygTxq-dPTMWVFmE-u_gexVUc1XkW5WIhViqPUVllNCoQ-2xGQ=w992-h1404-s-no-gm?authuser=0" target="_blank" rel="noopener noreferrer">
+                                                        <img id="poster1" src="https://lh3.googleusercontent.com/pw/AP1GczMFg9hx6oHv2olIx4K-kx_tpFX9owoBx4bcFdgaLxmELkhzf9IGcYI-tEvvZL1-tQELgXqukcJIXzO7HRXho_dTxZOoD1g9HYqDGCgevygTxq-dPTMWVFmE-u_gexVUc1XkW5WIhViqPUVllNCoQ-2xGQ=w992-h1404-s-no-gm?authuser=0" alt="Creativity Playground Poster 1" class="rounded-lg shadow-md w-full">
+                                                    </a>
+                                                    <div class="magnify-lens"></div>
                                                 </div>
-                                                <div>
-                                                    <!-- !! REPLACE THIS SRC WITH YOUR PUBLIC IMAGE URL FOR THE SECOND POSTER !! -->
-                                                    <img src="https://lh3.googleusercontent.com/pw/AP1GczP3JEIHn3fgSIVSUb7cvDyN7Xm-W_fVckxNWFqeqE4d9Ug8gqbT5KUPVnXFkxTGps6RdQNY_XZoyM2p4lvOf8PV9l-ituPS-cQgl1biqaEinWP7iayeRNQ-YngAriGFpIFRiIP7-NO5p9s3WdvzjlsZRA=w992-h1404-s-no-gm?authuser=0" alt="Creativity Playground Poster 2" class="rounded-lg shadow-md w-full">
+                                                <!-- Poster 2 with Magnifier Container -->
+                                                <div class="magnify-container">
+                                                    <a href="https://lh3.googleusercontent.com/pw/AP1GczP3JEIHn3fgSIVSUb7cvDyN7Xm-W_fVckxNWFqeqE4d9Ug8gqbT5KUPVnXFkxTGps6RdQNY_XZoyM2p4lvOf8PV9l-ituPS-cQgl1biqaEinWP7iayeRNQ-YngAriGFpIFRiIP7-NO5p9s3WdvzjlsZRA=w992-h1404-s-no-gm?authuser=0" target="_blank" rel="noopener noreferrer">
+                                                        <img id="poster2" src="https://lh3.googleusercontent.com/pw/AP1GczP3JEIHn3fgSIVSUb7cvDyN7Xm-W_fVckxNWFqeqE4d9Ug8gqbT5KUPVnXFkxTGps6RdQNY_XZoyM2p4lvOf8PV9l-ituPS-cQgl1biqaEinWP7iayeRNQ-YngAriGFpIFRiIP7-NO5p9s3WdvzjlsZRA=w992-h1404-s-no-gm?authuser=0" alt="Creativity Playground Poster 2" class="rounded-lg shadow-md w-full">
+                                                    </a>
+                                                    <div class="magnify-lens"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1357,6 +1406,64 @@
             drawSpinner(currentRotation);
             spinnerInitialized = true;
         }
+
+        // --- IMAGE MAGNIFIER LOGIC (Final, Robust Version) ---
+        document.querySelectorAll('.magnify-container').forEach(container => {
+            const img = container.querySelector('img');
+            const lens = container.querySelector('.magnify-lens');
+
+            if (!img || !lens) return;
+
+            const setupMagnifier = () => {
+                const zoom = 1.3; // Magnification level
+
+                // Use the image's actual file dimensions for a reliable calculation
+                const naturalImgWidth = img.naturalWidth;
+                const naturalImgHeight = img.naturalHeight;
+
+                // Set the background of the lens to be the same as the image source
+                lens.style.backgroundImage = `url(${img.src})`;
+                // Set the size of the background image within the lens to be the zoomed version
+                lens.style.backgroundSize = `${naturalImgWidth * zoom}px ${naturalImgHeight * zoom}px`;
+
+                function moveMagnifier(e) {
+                    e.preventDefault();
+
+                    const rect = img.getBoundingClientRect();
+                    // Get cursor position relative to the image
+                    const x = e.pageX - rect.left - window.scrollX;
+                    const y = e.pageY - rect.top - window.scrollY;
+
+                    // Calculate the ratio of the displayed image size vs its natural size
+                    const ratioX = naturalImgWidth / img.offsetWidth;
+                    const ratioY = naturalImgHeight / img.offsetHeight;
+
+                    // Position the lens
+                    lens.style.left = `${x - lens.offsetWidth / 2}px`;
+                    lens.style.top = `${y - lens.offsetHeight / 2}px`;
+
+                    // Position the background image inside the lens
+                    const bgX = -((x * ratioX * zoom) - lens.offsetWidth / 2);
+                    const bgY = -((y * ratioY * zoom) - lens.offsetHeight / 2);
+                    lens.style.backgroundPosition = `${bgX}px ${bgY}px`;
+                }
+
+                container.addEventListener('mousemove', moveMagnifier);
+                container.addEventListener('mouseenter', () => {
+                    lens.style.display = 'block';
+                });
+                container.addEventListener('mouseleave', () => {
+                    lens.style.display = 'none';
+                });
+            };
+
+            // Wait for the image to be fully loaded before setting up the magnifier
+            if (img.complete) {
+                setupMagnifier();
+            } else {
+                img.addEventListener('load', setupMagnifier);
+            }
+        });
     </script>
 </body>
 
