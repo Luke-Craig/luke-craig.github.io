@@ -876,8 +876,34 @@
 
             <!-- Adventures Page -->
             <div id="adventures" class="page fade-in">
-                <div class="max-w-4xl mx-auto">
-                    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Adventures</h1>
+                <div class="max-w-5xl mx-auto">
+                    <!-- Page Title and Introduction -->
+                    <div class="text-center mb-12">
+                        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Adventure Log</h1>
+                        <p class="max-w-2xl mx-auto text-gray-600">
+                            A collection of challenges, journeys, and memorable experiences. Click on any adventure to see the full story.
+                        </p>
+                    </div>
+
+                    <!-- Adventure Grid -->
+                    <div id="adventure-grid" class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-4">
+                        <!-- Adventure cards will be dynamically inserted here by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Modal Container (hidden by default) -->
+                <div id="adventure-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden transition-opacity duration-300">
+
+                    <!-- Close button is now a sibling of the content, positioned relative to the screen -->
+                    <button id="modal-close-btn" class="absolute top-4 right-4 w-10 h-10 bg-white text-gray-700 rounded-full text-2xl leading-none shadow-lg z-10 flex items-center justify-center">&times;</button>
+
+                    <!-- Modal Content -->
+                    <div id="modal-content" class="bg-white rounded-xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto transform scale-95 transition-transform duration-300">
+                        <!-- Dynamic Content Area -->
+                        <div id="modal-body">
+                            <!-- Content will be injected here -->
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1463,6 +1489,110 @@
             } else {
                 img.addEventListener('load', setupMagnifier);
             }
+        });
+
+        // --- ADVENTURE MODAL LOGIC (Final Polish) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const adventures = [{
+                    title: "The Northern Traverse",
+                    image: "https://lh3.googleusercontent.com/pw/AP1GczPdShgNXQg_ac7KJ3-6ZNEjYEU9wtB6lUAgqEhdg3ytBvX3e6kEp3nLYkd6921MgtD2X_r1HQ9v55-CFtUzDKqkFcJXH0klWlHW_M-fCrgrlIOpeatvlL8NxfRe52WaolDDwi8ShXtkrvoUv8recz43tg=w1870-h1404-s-no-gm?authuser=0",
+                    description: "A 5-day, 190-mile ultra-marathon crossing the UK from St Bees on the west coast to Robin Hood's Bay on the east. The route traverses three National Parks: The Lake District, The Yorkshire Dales, and The North York Moors. It was a brilliant and brutal experience, battling the elements and the terrain.",
+                    stats: {
+                        Distance: "190 miles",
+                        Duration: "5 days",
+                        Location: "UK Coast to Coast"
+                    }
+                },
+                {
+                    title: "Crossing Switzerland",
+                    image: "https://lh3.googleusercontent.com/pw/AP1GczNWl8ICkm-iAFatrj_iRv3Tz4EXpHLLa1cB3yBYB8ssv1Bc_3oWfYMpQ-8dv5C71N82SaRLbxBgtsZGOE6NYfeccR8BYWislYin2NBq6aHq4KpD3_wsMA7Hz38NPSxRtnIiY71INweds8OMaDTxV59L2Q=w1870-h1404-s-no-gm?authuser=0",
+                    description: "A 7-day, 240-mile ultra along the stunning Via Alpina trail. This was another ridiculous challenge, with a total of 24,000 meters of elevation gain through the Swiss Alps. The views were breathtaking and the challenge was immense, but I loved every moment. Except getting stung by a bee on my arse.",
+                    stats: {
+                        Distance: "240 miles",
+                        Duration: "7 days",
+                        Elevation: "24,000m"
+                    }
+                },
+                {
+                    title: "Arctic Triple Triathlon",
+                    image: "https://lh3.googleusercontent.com/pw/AP1GczNTTgF9zk8D8T1_Zhf-vh13kdrMyAdtDR_CRrOdcFko97-c0ns4uEO4snepDC7ukyXNJIC7rRBN1KKZGy-eeBuwu5WClJv6Fljpb0hQx7T6PGz2skN3Y1okpzpZ6ikZk4AWZfNQbNfEUi3ZpeLE0ArZdQ=w1404-h1404-s-no-gm?authuser=0",
+                    description: "To celebrate my 30th birthday, I signed up for this extreme distance triathlon in Lofoten, northern Norway. It consisted of a 4km swim in the Norwegian Sea, a 196km bike ride through the mountains, and a 45km run. I finished in about 16 hours on the day of my birthday, an unforgettable experience.",
+                    stats: {
+                        Distance: "Ironman+",
+                        Location: "Lofoten, Norway",
+                        Highlight: "Finishing on my 30th birthday"
+                    }
+                },
+            ];
+
+            const adventureGrid = document.getElementById('adventure-grid');
+            const modal = document.getElementById('adventure-modal');
+            const modalContent = document.getElementById('modal-content');
+            const modalBody = document.getElementById('modal-body');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+
+            if (!adventureGrid || !modal) return;
+
+            adventures.forEach((adventure, index) => {
+                const card = document.createElement('div');
+                card.className = 'adventure-card bg-white rounded-xl shadow-md overflow-hidden transform hover:-translate-y-1 transition-transform duration-300 cursor-pointer';
+
+                card.innerHTML = `
+            <div class="w-full h-32 bg-gray-200 flex items-center justify-center rounded-t-xl">
+                <img src="${adventure.image}" alt="${adventure.title}" class="w-full h-full object-contain">
+            </div>
+            <!-- CHANGE 1: Centered the text on the thumbnail card -->
+            <div class="p-3 text-center">
+                <h3 class="font-bold text-base">${adventure.title}</h3>
+            </div>
+        `;
+                card.addEventListener('click', () => openModal(adventure));
+                adventureGrid.appendChild(card);
+            });
+
+            function openModal(adventure) {
+                let statsHTML = '';
+                for (const [key, value] of Object.entries(adventure.stats)) {
+                    statsHTML += `<div class="bg-gray-100 rounded-lg p-3"><p class="text-sm text-gray-500">${key}</p><p class="font-bold text-gray-800">${value}</p></div>`;
+                }
+
+                // --- CHANGE 2: Made the modal image taller ---
+                modalBody.innerHTML = `
+            <div class="w-full h-[32rem] bg-gray-800 rounded-t-xl flex items-center justify-center">
+                 <img src="${adventure.image}" alt="${adventure.title}" class="w-full h-full object-contain">
+            </div>
+            <div class="p-6">
+                <h2 class="text-3xl font-bold mb-4">${adventure.title}</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6 text-center">
+                    ${statsHTML}
+                </div>
+                <p class="text-gray-700 whitespace-pre-wrap">${adventure.description}</p>
+            </div>
+        `;
+
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                setTimeout(() => {
+                    modal.style.opacity = '1';
+                    modalContent.style.transform = 'scale(1)';
+                }, 10);
+            }
+
+            function closeModal() {
+                modal.style.opacity = '0';
+                modalContent.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                }, 300);
+            }
+
+            modalCloseBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
         });
     </script>
 </body>
