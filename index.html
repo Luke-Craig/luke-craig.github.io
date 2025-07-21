@@ -136,6 +136,87 @@
             border-top: 1px solid #e5e7eb;
         }
 
+        /* --- CSS for View Toggle --- */
+        .view-toggle-btn {
+            transition: background-color 0.3s, color 0.3s;
+            color: #4b5563;
+            /* text-gray-600 */
+        }
+
+        .view-toggle-btn.active {
+            background-color: #ffffff;
+            color: #3b82f6;
+            /* text-blue-600 */
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+
+        /* --- CSS for Map Pins, Tooltips, and Leader Lines --- */
+        .map-pin {
+            position: absolute;
+            z-index: 10;
+            /* Base layer for the pin */
+            width: 20px;
+            height: 20px;
+            background-color: #ef4444;
+            /* Red */
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+            transform: translate(-50%, -100%);
+        }
+
+        .map-pin:hover {
+            transform: translate(-50%, -100%) scale(1.5);
+            background-color: #3b82f6;
+            /* Blue on hover */
+            z-index: 11;
+            /* Bring hovered pin to the front */
+        }
+
+        .pin-tooltip {
+            position: absolute;
+            bottom: 150%;
+            /* Position above the pin */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out;
+            pointer-events: none;
+            /* The tooltip itself isn't clickable */
+            z-index: 12;
+            /* Ensure tooltip is on top of the pin */
+        }
+
+        .map-pin:hover .pin-tooltip {
+            opacity: 1;
+        }
+
+        .leader-line {
+            stroke: #4b5563;
+            /* Gray-600 */
+            stroke-width: 1.5;
+            stroke-dasharray: 4 2;
+            /* Creates a dashed line */
+            pointer-events: none;
+        }
+
+        .location-dot {
+            fill: #4b5563;
+            /* Gray-600 */
+            stroke: white;
+            stroke-width: 1;
+            pointer-events: none;
+        }
+
         /* --- CSS for Image Magnifier --- */
         .magnify-container {
             position: relative;
@@ -878,36 +959,45 @@
 
             <!-- Adventures Page -->
             <div id="adventures" class="page fade-in">
-                <div class="max-w-5xl mx-auto">
+                <div class="max-w-6xl mx-auto">
                     <!-- Page Title and Introduction -->
-                    <div class="text-center mb-12">
+                    <div class="text-center mb-8">
                         <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Adventure Log</h1>
                         <p class="max-w-2xl mx-auto text-gray-600">
-                            A collection of challenges, journeys, and memorable experiences. Click on any adventure to see the full story.
+                            A collection of challenges and journeys from around the world. Click on a pin or a card to explore an adventure.
                         </p>
                     </div>
 
-                    <!-- Adventure Grid -->
-                    <div id="adventure-grid" class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-4">
+                    <!-- View Toggle Switch -->
+                    <div class="flex justify-center mb-8">
+                        <div class="flex items-center space-x-2 bg-gray-200 p-1 rounded-full">
+                            <button id="map-view-btn" class="view-toggle-btn active px-4 py-1 rounded-full text-sm font-semibold">Map View</button>
+                            <button id="grid-view-btn" class="view-toggle-btn px-4 py-1 rounded-full text-sm font-semibold">Tile View</button>
+                        </div>
+                    </div>
+
+                    <!-- Map Container -->
+                    <div id="map-container" class="relative w-full max-w-5xl mx-auto rounded-xl shadow-lg overflow-hidden" style="aspect-ratio: 16/9;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/BlankMap-World-2005.png" alt="World Map" class="absolute inset-0 w-full h-full object-cover">
+                        <svg id="map-lines-svg" class="absolute inset-0 w-full h-full pointer-events-none z-[5]"></svg>
+                        <!-- Pins will be dynamically inserted here by JavaScript -->
+                    </div>
+
+                    <!-- Adventure Grid (initially hidden) -->
+                    <div id="adventure-grid" class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-4 hidden">
                         <!-- Adventure cards will be dynamically inserted here by JavaScript -->
                     </div>
                 </div>
 
-                <!-- Modal Container (hidden by default) -->
+                <!-- Modal Container -->
                 <div id="adventure-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden transition-opacity duration-300">
-
-                    <!-- Close button is now a sibling of the content, positioned relative to the screen -->
                     <button id="modal-close-btn" class="absolute top-4 right-4 w-10 h-10 bg-white text-gray-700 rounded-full text-2xl leading-none shadow-lg z-10 flex items-center justify-center">&times;</button>
-
-                    <!-- Modal Content -->
                     <div id="modal-content" class="bg-white rounded-xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto transform scale-95 transition-transform duration-300">
-                        <!-- Dynamic Content Area -->
-                        <div id="modal-body">
-                            <!-- Content will be injected here -->
-                        </div>
+                        <div id="modal-body"></div>
                     </div>
                 </div>
             </div>
+
 
             <!-- Future Page -->
             <div id="future" class="page fade-in">
@@ -1050,21 +1140,20 @@
         navLinks.forEach(link => {
             link.addEventListener("click", function(e) {
                 e.preventDefault();
-
                 const targetPage = this.getAttribute("data-page");
 
-                // Update active nav link
                 navLinks.forEach(link => link.classList.remove("active"));
                 this.classList.add("active");
 
-                // Show target page
                 pages.forEach(page => {
                     page.classList.remove("active");
                     if (page.id === targetPage) {
                         page.classList.add("active");
 
                         // --- THIS IS THE NEW PART ---
-                        // If the target is the future page, initialize the spinner
+                        if (targetPage === 'adventures') {
+                            initializeAdventureMap();
+                        }
                         if (targetPage === 'future') {
                             initializeSpinner();
                         }
@@ -1493,63 +1582,183 @@
             }
         });
 
-        // --- ADVENTURE MODAL LOGIC (Final Polish) ---
-        document.addEventListener('DOMContentLoaded', () => {
+        // --- ADVENTURE MAP & MODAL LOGIC (v9 - Universal Offset) ---
+        let adventureMapInitialized = false;
+
+        function initializeAdventureMap() {
+            if (adventureMapInitialized) return;
+
             const adventures = [{
                     title: "The Northern Traverse",
                     image: "https://lh3.googleusercontent.com/pw/AP1GczPdShgNXQg_ac7KJ3-6ZNEjYEU9wtB6lUAgqEhdg3ytBvX3e6kEp3nLYkd6921MgtD2X_r1HQ9v55-CFtUzDKqkFcJXH0klWlHW_M-fCrgrlIOpeatvlL8NxfRe52WaolDDwi8ShXtkrvoUv8recz43tg=w1870-h1404-s-no-gm?authuser=0",
-                    description: "A 5-day, 190-mile ultra-marathon crossing the UK from St Bees on the west coast to Robin Hood's Bay on the east. The route traverses three National Parks: The Lake District, The Yorkshire Dales, and The North York Moors. It was a brilliant and brutal experience, battling the elements and the terrain.",
+                    description: "A 5-day, 190-mile ultra-marathon crossing the UK from St Bees on the west coast to Robin Hood's Bay on the east...",
                     stats: {
                         Distance: "190 miles",
                         Duration: "5 days",
                         Location: "UK Coast to Coast"
-                    }
+                    },
+                    locationCoords: {
+                        top: 18.3,
+                        left: 43.3
+                    },
+                    pinCoords: {
+                        top: 15.8,
+                        left: 44.4
+                    } // Manually set pin position
+                },
+                {
+                    title: "Bob Graham Round",
+                    image: "https://i.ibb.co/z5N1d0D/bg.jpg",
+                    description: "A fell running challenge in the English Lake District. It is a circuit of 66 miles, 27,000 ft of ascent, covering 42 of the highest peaks in the area within 24 hours.",
+                    stats: {
+                        Distance: "66 miles",
+                        Duration: "< 24 hours",
+                        Location: "Lake District, UK"
+                    },
+                    locationCoords: {
+                        top: 18.6,
+                        left: 42.8
+                    },
+                    pinCoords: {
+                        top: 16.4,
+                        left: 40.2
+                    } // Manually set pin position
                 },
                 {
                     title: "Crossing Switzerland",
                     image: "https://lh3.googleusercontent.com/pw/AP1GczNWl8ICkm-iAFatrj_iRv3Tz4EXpHLLa1cB3yBYB8ssv1Bc_3oWfYMpQ-8dv5C71N82SaRLbxBgtsZGOE6NYfeccR8BYWislYin2NBq6aHq4KpD3_wsMA7Hz38NPSxRtnIiY71INweds8OMaDTxV59L2Q=w1870-h1404-s-no-gm?authuser=0",
-                    description: "A 7-day, 240-mile ultra along the stunning Via Alpina trail. This was another ridiculous challenge, with a total of 24,000 meters of elevation gain through the Swiss Alps. The views were breathtaking and the challenge was immense, but I loved every moment. Except getting stung by a bee on my arse.",
+                    description: "A 7-day, 240-mile ultra along the stunning Via Alpina trail...",
                     stats: {
                         Distance: "240 miles",
                         Duration: "7 days",
                         Elevation: "24,000m"
-                    }
+                    },
+                    locationCoords: {
+                        top: 24.3,
+                        left: 46.6
+                    },
+                    pinCoords: {
+                        top: 34.4,
+                        left: 45.8
+                    } // Manually set pin position
                 },
                 {
                     title: "Arctic Triple Triathlon",
                     image: "https://lh3.googleusercontent.com/pw/AP1GczNTTgF9zk8D8T1_Zhf-vh13kdrMyAdtDR_CRrOdcFko97-c0ns4uEO4snepDC7ukyXNJIC7rRBN1KKZGy-eeBuwu5WClJv6Fljpb0hQx7T6PGz2skN3Y1okpzpZ6ikZk4AWZfNQbNfEUi3ZpeLE0ArZdQ=w1404-h1404-s-no-gm?authuser=0",
-                    description: "To celebrate my 30th birthday, I signed up for this extreme distance triathlon in Lofoten, northern Norway. It consisted of a 4km swim in the Norwegian Sea, a 196km bike ride through the mountains, and a 45km run. I finished in about 16 hours on the day of my birthday, an unforgettable experience.",
+                    description: "To celebrate my 30th birthday, I signed up for this extreme distance triathlon in Lofoten, northern Norway...",
                     stats: {
                         Distance: "Ironman+",
                         Location: "Lofoten, Norway",
                         Highlight: "Finishing on my 30th birthday"
+                    },
+                    locationCoords: {
+                        top: 8.6,
+                        left: 50.7
+                    },
+                    pinCoords: {
+                        top: 18,
+                        left: 52.7
                     }
+                    // No pinCoords: this pin will be placed automatically
                 },
             ];
 
+            const mapContainer = document.getElementById('map-container');
+            const linesSvg = document.getElementById('map-lines-svg');
             const adventureGrid = document.getElementById('adventure-grid');
             const modal = document.getElementById('adventure-modal');
             const modalContent = document.getElementById('modal-content');
             const modalBody = document.getElementById('modal-body');
             const modalCloseBtn = document.getElementById('modal-close-btn');
+            const mapViewBtn = document.getElementById('map-view-btn');
+            const gridViewBtn = document.getElementById('grid-view-btn');
 
-            if (!adventureGrid || !modal) return;
+            if (!adventureGrid || !modal || !mapContainer) return;
+
+            const placedPins = [];
+            const mapHeight = mapContainer.offsetHeight;
 
             adventures.forEach((adventure, index) => {
+                let finalPinCoords;
+
+                if (adventure.pinCoords) {
+                    finalPinCoords = adventure.pinCoords;
+                } else {
+                    // --- THIS IS THE NEW LOGIC ---
+                    // Start with a default offset for every automatic pin
+                    let tempCoords = {
+                        top: adventure.locationCoords.top - 3,
+                        left: adventure.locationCoords.left - 2
+                    };
+                    // --- END OF NEW LOGIC ---
+
+                    let isOverlapping = true;
+                    const pinSize = 3.5;
+
+                    while (isOverlapping) {
+                        isOverlapping = false;
+                        for (const placed of placedPins) {
+                            const dx = placed.left - tempCoords.left;
+                            const dy = placed.top - tempCoords.top;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            if (distance < pinSize) {
+                                isOverlapping = true;
+                                tempCoords.top -= 0.5;
+                                tempCoords.left -= 0.5;
+                                break;
+                            }
+                        }
+                    }
+                    finalPinCoords = tempCoords;
+                }
+                placedPins.push(finalPinCoords);
+
+                const pin = document.createElement('div');
+                pin.className = 'map-pin';
+                pin.style.top = `${finalPinCoords.top}%`;
+                pin.style.left = `${finalPinCoords.left}%`;
+                pin.innerHTML = `<span class="pin-tooltip">${adventure.title}</span>`;
+                pin.addEventListener('click', () => openModal(adventure));
+                mapContainer.appendChild(pin);
+
+                const yOffsetPercent = (10 / mapHeight) * 100;
+
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('class', 'leader-line');
+                line.setAttribute('x1', `${finalPinCoords.left}%`);
+                line.setAttribute('y1', `${finalPinCoords.top - yOffsetPercent}%`);
+                line.setAttribute('x2', `${adventure.locationCoords.left}%`);
+                line.setAttribute('y2', `${adventure.locationCoords.top}%`);
+                linesSvg.appendChild(line);
+
+                const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                dot.setAttribute('class', 'location-dot');
+                dot.setAttribute('cx', `${adventure.locationCoords.left}%`);
+                dot.setAttribute('cy', `${adventure.locationCoords.top}%`);
+                dot.setAttribute('r', '4');
+                linesSvg.appendChild(dot);
+
                 const card = document.createElement('div');
                 card.className = 'adventure-card bg-white rounded-xl shadow-md overflow-hidden transform hover:-translate-y-1 transition-transform duration-300 cursor-pointer';
-
                 card.innerHTML = `
-            <div class="w-full h-32 bg-gray-200 flex items-center justify-center rounded-t-xl">
-                <img src="${adventure.image}" alt="${adventure.title}" class="w-full h-full object-contain">
-            </div>
-            <!-- CHANGE 1: Centered the text on the thumbnail card -->
-            <div class="p-3 text-center">
-                <h3 class="font-bold text-base">${adventure.title}</h3>
-            </div>
+            <div class="w-full h-32 bg-gray-200 flex items-center justify-center rounded-t-xl"><img src="${adventure.image}" alt="${adventure.title}" class="w-full h-full object-contain"></div>
+            <div class="p-3 text-center"><h3 class="font-bold text-base">${adventure.title}</h3></div>
         `;
                 card.addEventListener('click', () => openModal(adventure));
                 adventureGrid.appendChild(card);
+            });
+
+            mapViewBtn.addEventListener('click', () => {
+                mapViewBtn.classList.add('active');
+                gridViewBtn.classList.remove('active');
+                mapContainer.classList.remove('hidden');
+                adventureGrid.classList.add('hidden');
+            });
+            gridViewBtn.addEventListener('click', () => {
+                gridViewBtn.classList.add('active');
+                mapViewBtn.classList.remove('active');
+                adventureGrid.classList.remove('hidden');
+                mapContainer.classList.add('hidden');
             });
 
             function openModal(adventure) {
@@ -1557,21 +1766,10 @@
                 for (const [key, value] of Object.entries(adventure.stats)) {
                     statsHTML += `<div class="bg-gray-100 rounded-lg p-3"><p class="text-sm text-gray-500">${key}</p><p class="font-bold text-gray-800">${value}</p></div>`;
                 }
-
-                // --- CHANGE 2: Made the modal image taller ---
                 modalBody.innerHTML = `
-            <div class="w-full h-[32rem] bg-gray-800 rounded-t-xl flex items-center justify-center">
-                 <img src="${adventure.image}" alt="${adventure.title}" class="w-full h-full object-contain">
-            </div>
-            <div class="p-6">
-                <h2 class="text-3xl font-bold mb-4">${adventure.title}</h2>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6 text-center">
-                    ${statsHTML}
-                </div>
-                <p class="text-gray-700 whitespace-pre-wrap">${adventure.description}</p>
-            </div>
+            <div class="w-full h-[32rem] bg-gray-800 rounded-t-xl flex items-center justify-center"><img src="${adventure.image}" alt="${adventure.title}" class="w-full h-full object-contain"></div>
+            <div class="p-6"><h2 class="text-3xl font-bold mb-4">${adventure.title}</h2><div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6 text-center">${statsHTML}</div><p class="text-gray-700 whitespace-pre-wrap">${adventure.description}</p></div>
         `;
-
                 modal.classList.remove('hidden');
                 document.body.style.overflow = 'hidden';
                 setTimeout(() => {
@@ -1588,14 +1786,13 @@
                     document.body.style.overflow = 'auto';
                 }, 300);
             }
-
             modalCloseBtn.addEventListener('click', closeModal);
             modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal();
-                }
+                if (e.target === modal) closeModal();
             });
-        });
+
+            adventureMapInitialized = true;
+        }
     </script>
 </body>
 
